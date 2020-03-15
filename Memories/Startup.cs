@@ -40,7 +40,7 @@ namespace Memories
             app.UseHttpsRedirection();
 
             app.UseOpenApi();
-            app.UseSwaggerUi3();
+            app.UseSwaggerUi3(); 
             app.UseRouting();
 
             app.UseAuthorization();
