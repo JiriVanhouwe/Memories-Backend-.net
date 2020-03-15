@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Memories.Models
 {
-    public interface IUser
+    public interface IUserRepository
     {
         User GetById(int id);
         IEnumerable<User> GetAll();

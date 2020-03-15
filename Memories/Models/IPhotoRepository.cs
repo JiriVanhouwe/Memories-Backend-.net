@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Memories.Models
 {
-    public interface IPhoto
+    public interface IPhotoRepository
     {
         Photo GetById(int id);
         IEnumerable<Photo> GetAll();
