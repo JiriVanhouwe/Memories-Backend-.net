@@ -12,7 +12,7 @@ namespace Memories.Data.Repositories
         private readonly ApplicationDbContext _context;
         private readonly DbSet<User> _users;
 
-        public UserRepository(ApplicationDbContext dbContext)
+        public UserRepository(ApplicationDbContext dbContext) 
         {
             _context = dbContext;
             _users = dbContext.Users;
