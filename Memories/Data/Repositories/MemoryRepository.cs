@@ -21,32 +21,32 @@ namespace Memories.Data.Repositories
 
         public void Add(Memory memory)
         {
-            throw new NotImplementedException();
+            _memories.Add(memory);
         }
 
         public void Delete(Memory memory)
         {
-            throw new NotImplementedException();
+            _memories.Remove(memory);
         }
 
         public IEnumerable<Memory> GetAll()
         {
-            throw new NotImplementedException();
+            return _memories.ToList();
         }
 
         public Memory GetById(int id)
         {
-            throw new NotImplementedException();
+            return _memories.SingleOrDefault(m => m.Id == id);
         }
 
         public void SaveChanges()
         {
-            throw new NotImplementedException();
+            _context.SaveChanges();
         }
 
         public void Update(Memory memory)
         {
-            throw new NotImplementedException();
+            _memories.Update(memory);
         }
     }
 }
