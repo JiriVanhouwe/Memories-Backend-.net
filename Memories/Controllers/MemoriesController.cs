@@ -20,7 +20,20 @@ namespace Memories.Controllers
         }
 
         //GET
-       
+        [HttpGet]
+        public IEnumerable<Memory> GetMemories()
+        {
+            return _memoryRepository.GetAll().OrderBy(m => m.StartDate).ToList();
+        }
+
+        [HttpGet]
+        public ActionResult<Memory> GetMemory(int id)
+        {
+            Memory memory = _memoryRepository.GetById(id);
+            if (memory == null) return NotFound();
+
+            return memory;
+        }
         //POST
         //PUT
         //DELETE

@@ -20,27 +20,27 @@ namespace Memories.Data.Repositories
 
         public void Add(User user)
         {
-            throw new NotImplementedException();
+            _users.Add(user);
         }
 
         public void Delete(User user)
         {
-            throw new NotImplementedException();
+            _users.Remove(user);
         }
 
         public IEnumerable<User> GetAll()
         {
-            throw new NotImplementedException();
+            return _users.ToList();
         }
 
         public User GetById(int id)
         {
-            throw new NotImplementedException();
+            return _users.SingleOrDefault(u => u.Id == id);
         }
 
         public void SaveChanges()
         {
-            throw new NotImplementedException();
+            _context.SaveChanges();
         }
     }
 }
