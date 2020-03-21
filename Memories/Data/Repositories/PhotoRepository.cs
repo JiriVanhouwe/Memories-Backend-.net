@@ -20,32 +20,32 @@ namespace Memories.Data.Repositories
 
         public void Add(Photo photo)
         {
-            throw new NotImplementedException();
+            _photos.Add(photo);
         }
 
         public void Delete(Photo photo)
         {
-            throw new NotImplementedException();
+            _photos.Remove(photo);
         }
 
         public IEnumerable<Photo> GetAll()
         {
-            throw new NotImplementedException();
+            return _photos.ToList();
         }
 
         public Photo GetById(int id)
         {
-            throw new NotImplementedException();
+            return _photos.SingleOrDefault(p => p.Id == id);
         }
 
         public void SaveChanges()
         {
-            throw new NotImplementedException();
+            _context.SaveChanges();
         }
 
         public void Update(Photo photo)
         {
-            throw new NotImplementedException();
+            _photos.Update(photo);
         }
     }
 }
