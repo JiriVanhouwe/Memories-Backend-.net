@@ -12,7 +12,7 @@ namespace Memories.Data.Mappers
     {
         public void Configure(EntityTypeBuilder<Photo> builder)
         {
-            throw new NotImplementedException();
+            builder.HasKey(p => p.Id);
         }
     }
 }

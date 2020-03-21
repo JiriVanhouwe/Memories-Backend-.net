@@ -26,14 +26,14 @@ namespace Memories.Controllers
             return _memoryRepository.GetAll().OrderBy(m => m.StartDate).ToList();
         }
 
-        [HttpGet]
+       /* [HttpGet]
         public ActionResult<Memory> GetMemory(int id)
         {
             Memory memory = _memoryRepository.GetById(id);
             if (memory == null) return NotFound();
 
             return memory;
-        }
+        }*/
         //POST
         //PUT
         //DELETE

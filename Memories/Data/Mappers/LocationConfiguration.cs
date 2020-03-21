@@ -12,7 +12,9 @@ namespace Memories.Data.Mappers
     {
         public void Configure(EntityTypeBuilder<Location> builder)
         {
-            throw new NotImplementedException();
+            builder.HasKey(t => t.Id);
+            builder.Property(t => t.City).IsRequired().HasMaxLength(50);
+            builder.Property(t => t.Country).IsRequired().HasMaxLength(50);
         }
     }
 }

@@ -12,7 +12,13 @@ namespace Memories.Data.Mappers
     {
         public void Configure(EntityTypeBuilder<Memory> builder)
         {
-            throw new NotImplementedException();
+            builder.HasKey(t => t.Id);
+            builder.Property(t => t.StartDate).IsRequired();
+            builder.Property(t => t.EndDate).IsRequired();
+            builder.Property(t => t.Title).IsRequired().HasMaxLength(50);
+
+            builder.HasOne(t => t.Location).WithMany().IsRequired().OnDelete(DeleteBehavior.Restrict);
+            builder.HasMany(t => t.Photos).WithOne().OnDelete(DeleteBehavior.Cascade);
         }
     }
 }
