@@ -1,4 +1,5 @@
-﻿using Memories.Models;
+﻿using Memories.Data.Mappers;
+using Memories.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -21,6 +22,10 @@ namespace Memories.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+            modelBuilder.ApplyConfiguration(new LocationConfiguration());
+            modelBuilder.ApplyConfiguration(new MemoryConfiguration());
+            modelBuilder.ApplyConfiguration(new PhotoConfiguration());
+            modelBuilder.ApplyConfiguration(new UserConfiguration());
 
         }
 
