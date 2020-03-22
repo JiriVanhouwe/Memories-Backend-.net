@@ -12,8 +12,8 @@ namespace Memories.Models
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Email { get; set; }
-        public ICollection<User> Friends { get; set; }
-        public ICollection<Memory> Memories { get; set; }
+        public ICollection<User> Friends { get; private set; }
+        public ICollection<Memory> Memories { get; private set; }
         #endregion
 
 

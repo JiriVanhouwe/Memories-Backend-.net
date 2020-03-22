@@ -14,7 +14,7 @@ namespace Memories.Models
         public User Organizer { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
-        public ICollection<Photo> Photos { get; set; }
+        public ICollection<Photo> Photos { get; private set; }
         public Location Location { get; set; }
         #endregion
 

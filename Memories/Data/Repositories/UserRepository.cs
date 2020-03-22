@@ -33,6 +33,11 @@ namespace Memories.Data.Repositories
             return _users.ToList();
         }
 
+        public void Update(User user)
+        {
+            _users.Update(user);
+        }
+
         public User GetById(int id)
         {
             return _users.SingleOrDefault(u => u.Id == id);

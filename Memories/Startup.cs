@@ -46,7 +46,8 @@ namespace Memories
                 c.Version = "v1";
                 c.Description = "The Memory API documentation - Jiri Vanhouwe";
             });
-           // services.AddSwaggerDocument();
+            // services.AddSwaggerDocument();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -62,6 +63,7 @@ namespace Memories
             app.UseOpenApi();
             app.UseSwaggerUi3(); 
             app.UseRouting();
+         
 
             app.UseAuthorization();
 

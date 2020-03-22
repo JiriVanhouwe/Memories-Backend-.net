@@ -9,6 +9,7 @@ namespace Memories.Models
     {
         User GetById(int id);
         IEnumerable<User> GetAll();
+        void Update(User user);
         void Add(User user);
         void Delete(User user);
         void SaveChanges();
