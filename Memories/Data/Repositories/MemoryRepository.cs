@@ -31,12 +31,12 @@ namespace Memories.Data.Repositories
 
         public IEnumerable<Memory> GetAll()
         {
-            return _memories.ToList();
+            return _memories.Include(m => m.Location).Include(m => m.Location).Include(m => m.Photos).ToList();
         }
 
         public Memory GetById(int id)
         {
-            return _memories.SingleOrDefault(m => m.Id == id);
+            return _memories.Include(m => m.Location).Include(m => m.Location).Include(m => m.Photos).SingleOrDefault(m => m.Id == id);
         }
 
         public void SaveChanges()

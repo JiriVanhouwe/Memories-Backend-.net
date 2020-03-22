@@ -23,12 +23,12 @@ namespace Memories.Models
 
         }
         public User(string firstName, string lastName, string email)
-        {
-            Friends = new List<User>();
-            Memories = new List<Memory>();
+        {            
             FirstName = firstName;
             LastName = lastName;
             Email = email;
+            Friends = new List<User>();
+            Memories = new List<Memory>();
         }
         #endregion
 

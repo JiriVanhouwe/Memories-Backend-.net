@@ -38,7 +38,15 @@ namespace Memories
             services.AddScoped<IPhotoRepository, PhotoRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
 
-            services.AddSwaggerDocument();
+            //extra info toevoegen op swagger
+            services.AddOpenApiDocument(c =>
+            {
+                c.DocumentName = "Api docs";
+                c.Title = "Memory API";
+                c.Version = "v1";
+                c.Description = "The Memory API documentation";
+            });
+           // services.AddSwaggerDocument();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -15,6 +15,11 @@ namespace Memories.Models
 
 
         #region CONSTRUCTOR
+
+        public Location()
+        {
+
+        }
         public Location(string country, string city)
         {
             Country = country;

@@ -21,7 +21,7 @@ namespace Memories.Models
         #region CONSTRUCTOR
         public Memory()
         {
-
+           
         }
 
         public Memory(string title, string subTitle, User organizer, DateTime startDate, DateTime endDate, Location location)
@@ -41,6 +41,11 @@ namespace Memories.Models
         {
             Photos.Add(photo);
         } 
+
+        public void AddMultiplePhotos(List<Photo> list)
+        {
+            list.ForEach(p => Photos.Add(p));
+        }
         #endregion
 
 
