@@ -44,7 +44,7 @@ namespace Memories
                 c.DocumentName = "Api docs";
                 c.Title = "Memory API";
                 c.Version = "v1";
-                c.Description = "The Memory API documentation";
+                c.Description = "The Memory API documentation - Jiri Vanhouwe";
             });
            // services.AddSwaggerDocument();
         }
