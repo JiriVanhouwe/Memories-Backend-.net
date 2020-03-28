@@ -21,12 +21,24 @@ namespace Memories.Controllers
             _userRepository = context;
         }
 
+
+        //GET api/users
+        /// <summary>
+        /// Get all the users.
+        /// </summary>
+        /// <returns>List with all the users.</returns>
         [HttpGet]
         public IEnumerable<User> GetUsers()
         {
            return _userRepository.GetAll().OrderBy(u => u.FirstName).ThenBy(u => u.LastName).ToList();
         }
 
+        //GET api/users/id
+        /// <summary>
+        /// Get a user with a given id.
+        /// </summary>
+        /// <param name="id">The id of a user.</param>
+        /// <returns>The user. </returns>
         [HttpGet("{id}")]
         public ActionResult<User> GetUser(int id)
         {
@@ -37,6 +49,12 @@ namespace Memories.Controllers
             return user;
         }
 
+        //POST api/users
+        /// <summary>
+        /// Add a new user.
+        /// </summary>
+        /// <param name="user">The new user.</param>
+        /// <returns></returns>
         [HttpPost]
         public ActionResult<User> CreateUser(User user)
         {
@@ -46,6 +64,12 @@ namespace Memories.Controllers
             return CreatedAtAction(nameof(GetUser), new { id = user.Id }, user);
         }
 
+        //PUT api/users/id
+        /// <summary>
+        /// Modifies a user with the given id.
+        /// </summary>
+        /// <param name="id">The id of the user.</param>
+        /// <param name="user"></param>
         [HttpPut("{id}")]
         public IActionResult PutUser(int id, User user)
         {
@@ -57,6 +81,11 @@ namespace Memories.Controllers
             return NoContent();
         }
 
+        //DELETE api/users/id
+        /// <summary>
+        /// Deletes a user with the given id.
+        /// </summary>
+        /// <param name="id">The id of a user.</param>
         [HttpDelete("{id}")]
         public ActionResult<User> DeleteUser(int id)
         {
