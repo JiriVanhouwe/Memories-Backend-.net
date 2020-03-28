@@ -10,7 +10,7 @@ namespace Memories.Controllers
 {
     [ApiConventionType(typeof(DefaultApiConventions))]
     [Produces("application/json")]
-    [Route("api/[controller]")]
+    [Route("api/memories")]
     [ApiController]
     public class MemoriesController : ControllerBase
     {
@@ -81,7 +81,7 @@ namespace Memories.Controllers
 
         //DELETE api/memories/id
         /// <summary>
-        /// Deletes a memory.
+        /// Deletes a memory with given id.
         /// </summary>
         /// <param name="id">The id of the memory.</param>
         [HttpDelete("{id}")]

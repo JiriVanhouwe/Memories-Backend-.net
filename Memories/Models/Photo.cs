@@ -9,8 +9,10 @@ namespace Memories.Models
     {
         #region PROPERTIES
         public int Id { get; set; }
-        public string Description { get; set; } 
+        public string Description { get; set; }
+
         #endregion
+
 
 
         #region CONSTRUCTOR
@@ -19,8 +21,9 @@ namespace Memories.Models
 
         }
 
-        public Photo(string description = "")
+        public Photo(string description = "" )
         {
+           
             Description = description;
         } 
         #endregion
