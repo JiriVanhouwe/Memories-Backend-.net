@@ -45,15 +45,40 @@ api/memories/id - DELETE
 
 
 api/users - GET
+![SwaggerOverzicht](https://i.imgur.com/sMaQf44.png)
+
+![SwaggerOverzicht](https://i.imgur.com/P9sEHyE.png)
+
 
 api/users - POST
+![SwaggerOverzicht](https://i.imgur.com/g8sR8KB.png)
+
+![SwaggerOverzicht](https://i.imgur.com/KRLoU0A.png)
+
+![SwaggerOverzicht](https://i.imgur.com/9RxykYq.png)
+
 
 api/users/id - GET
+![SwaggerOverzicht](https://i.imgur.com/tEnkGq0.png)
+
+![SwaggerOverzicht](https://i.imgur.com/9ncdyLS.png)
+
+![SwaggerOverzicht](https://i.imgur.com/o5i6FLd.png)
 
 api/users/id - PUT
+![SwaggerOverzicht](https://i.imgur.com/s27vHjU.png)
+
+![SwaggerOverzicht](https://i.imgur.com/O6pe9IF.png)
+
+![SwaggerOverzicht](https://i.imgur.com/q9dToHh.png)
+
 
 api/users/id - DELETE
+![SwaggerOverzicht](https://i.imgur.com/RyFXNGN.png)
 
+![SwaggerOverzicht](https://i.imgur.com/18OWbnA.png)
+
+![SwaggerOverzicht](https://i.imgur.com/O7yMotj.png)
 
 
 
