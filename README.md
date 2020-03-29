@@ -6,7 +6,7 @@ Requirements backend Web IV
 de readme
 
 ☐ Printscreen van de API zoals weergegeven in swagger. Per endpoint een printscreen van de parameters en de responses
-![Swagger overzicht](https://imgur.com/jBFyRYF)
+![SwaggerOverzicht](https://imgur.com/jBFyRYF)
 
 
 https://imgur.com/jBFyRYF
