@@ -7,6 +7,8 @@ de readme
 
 ☐ Printscreen van de API zoals weergegeven in swagger. Per endpoint een printscreen van de parameters en de responses
 ![Swagger overzicht](https://imgur.com/jBFyRYF)
+
+
 https://imgur.com/jBFyRYF
 
 ☐ Printscreen van het klassendiagram van de domeinlaag (toont de klassen met properties en methodes (inclusief de datatypes) en de associaties)(meer op https://fmoralesdev.com/2019/05/16/generate-class-diagram-vs2019-net-core/)
