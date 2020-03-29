@@ -12,7 +12,8 @@ namespace Memories.Data.Mappers
     {
         public void Configure(EntityTypeBuilder<Photo> builder)
         {
-            builder.HasKey(p => p.Id);
+            builder.ToTable("Photo");
+            builder.HasKey(p => p.PhotoId);
         }
     }
 }

@@ -8,7 +8,7 @@ namespace Memories.Models
     public class Location
     {
         #region PROPERTIES
-        public int Id { get; set; }
+        public int LocationId { get; set; }
         public string Country { get; set; }
         public string City { get; set; }
         #endregion

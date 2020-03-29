@@ -8,7 +8,6 @@ namespace Memories.Models
     public interface IPhotoRepository
     {
         Photo GetById(int id);
-        IEnumerable<Photo> GetAll();
         void Add(Photo photo);
         void Delete(Photo photo);
         void Update(Photo photo);

@@ -12,7 +12,10 @@ namespace Memories.Data.Mappers
     {
         public void Configure(EntityTypeBuilder<Location> builder)
         {
-            builder.HasKey(t => t.Id);
+            builder.ToTable("Location");
+            builder.Property(t => t.LocationId).ValueGeneratedOnAdd();
+
+            builder.HasKey(t => t.LocationId);
             builder.Property(t => t.City).IsRequired().HasMaxLength(50);
             builder.Property(t => t.Country).IsRequired().HasMaxLength(50);
         }

@@ -21,8 +21,10 @@ namespace Memories.Data
             {
                 //locaties
                 Location gent = new Location("België", "Gent");
-                Location antwerpen = new Location("België", "Antwerpen");
                 Location madrid = new Location("Spanje", "Madrid");
+                
+                /*_dbContext.Locations.Add(gent);
+                _dbContext.Locations.Add(madrid);*/
 
                 //users
                 User jiri = new User("Jiri", "Vanhouwe", "jiri.vanhouwe@gmail.com");
@@ -31,9 +33,9 @@ namespace Memories.Data
                 _dbContext.Users.Add(angelique);
 
                 //memories
-                Memory reisMadrid = new Memory("Reis Madrid", "Kuieren in de binnenstad", jiri, new DateTime(2019, 5, 15), new DateTime(2019, 5, 20), madrid);
-                Memory kajakkenGent = new Memory("Kajakken in Gent", "Gentse wateren overmeesteren", angelique, new DateTime(2019, 6, 17), new DateTime(2019, 6, 17), gent);
-                Memory dinerInAmigo = new Memory("Verjaardagsdiner Amigo", "Smullen te Amigo", jiri, new DateTime(2019, 7, 22), new DateTime(2019, 7, 22), gent);
+                Memory reisMadrid = new Memory("Reis Madrid", "Kuieren in de binnenstad", new DateTime(2019, 5, 15), new DateTime(2019, 5, 20), madrid);
+                Memory kajakkenGent = new Memory("Kajakken in Gent", "Gentse wateren overmeesteren", new DateTime(2019, 6, 17), new DateTime(2019, 6, 17), gent);
+                Memory dinerInAmigo = new Memory("Verjaardagsdiner Amigo", "Smullen te Amigo",  new DateTime(2019, 7, 22), new DateTime(2019, 7, 22), gent);
 
                 //photos
                 Photo photo1 = new Photo("Selfie Madrid");
@@ -47,12 +49,13 @@ namespace Memories.Data
                 _dbContext.Photos.Add(photo2);
                 _dbContext.Photos.Add(photo3);
 
-                _dbContext.Memories.Add(reisMadrid);
-                _dbContext.Memories.Add(kajakkenGent);
-                _dbContext.Memories.Add(dinerInAmigo);
                 reisMadrid.AddMultiplePhotos(listPhotos); //foto's toevoegen aan reisMadrid
                 kajakkenGent.AddPhoto(photo1);
                 dinerInAmigo.AddPhoto(photo2);
+
+                _dbContext.Memories.Add(reisMadrid);
+                _dbContext.Memories.Add(kajakkenGent);
+                _dbContext.Memories.Add(dinerInAmigo);        
 
                 _dbContext.SaveChanges();
             }

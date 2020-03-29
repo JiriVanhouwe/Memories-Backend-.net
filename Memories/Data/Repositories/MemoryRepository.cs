@@ -17,6 +17,7 @@ namespace Memories.Data.Repositories
         {
             _context = dbContext;
             _memories = dbContext.Memories;
+
         }
 
         public void Add(Memory memory)
@@ -36,7 +37,7 @@ namespace Memories.Data.Repositories
 
         public Memory GetById(int id)
         {
-            return _memories.Include(m => m.Location).Include(m => m.Photos).SingleOrDefault(m => m.Id == id);
+            return _memories.Include(m => m.Location).Include(m => m.Photos).SingleOrDefault(m => m.MemoryId == id);
         }
 
         public void SaveChanges()

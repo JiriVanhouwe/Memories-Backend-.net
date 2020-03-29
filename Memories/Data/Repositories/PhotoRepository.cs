@@ -28,14 +28,10 @@ namespace Memories.Data.Repositories
             _photos.Remove(photo);
         }
 
-        public IEnumerable<Photo> GetAll()
-        {
-            return _photos.ToList();
-        }
 
         public Photo GetById(int id)
         {
-            return _photos.SingleOrDefault(p => p.Id == id);
+            return _photos.SingleOrDefault(p => p.PhotoId == id);
         }
 
         public void SaveChanges()

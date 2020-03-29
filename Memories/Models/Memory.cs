@@ -8,14 +8,14 @@ namespace Memories.Models
     public class Memory
     {
         #region PROPERTIES
-        public int Id { get; set; }
+        public int MemoryId { get; set; }
         public string Title { get; set; }
         public string SubTitle { get; set; }
-        public User Organizer { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         public ICollection<Photo> Photos { get; private set; }
         public Location Location { get; set; }
+       // public ICollection<User> Members { get; private set; }
         #endregion
 
         #region CONSTRUCTOR
@@ -24,15 +24,15 @@ namespace Memories.Models
            
         }
 
-        public Memory(string title, string subTitle, User organizer, DateTime startDate, DateTime endDate, Location location)
+        public Memory(string title, string subTitle,DateTime startDate, DateTime endDate, Location location)
         {
             Title = title;
             SubTitle = subTitle;
-            Organizer = organizer;
             StartDate = startDate;
             EndDate = endDate;
             Location = location;
             Photos = new List<Photo>();
+           // Members = new List<User>();
         }
         #endregion
 
@@ -46,6 +46,20 @@ namespace Memories.Models
         {
             list.ForEach(p => Photos.Add(p));
         }
+        public void RemovePhoto(Photo photo)
+        {
+            Photos.Remove(photo);
+        }
+
+      /*  public void AddMember(User user)
+        {
+            Members.Add(user);
+        }
+
+        public void RemoveMember(User user)
+        {
+            Members.Remove(user);
+        }*/
         #endregion
 
 

@@ -8,7 +8,7 @@ namespace Memories.Models
     public class Photo
     {
         #region PROPERTIES
-        public int Id { get; set; }
+        public int PhotoId { get; set; }
         public string Description { get; set; }
 
         #endregion
@@ -21,7 +21,7 @@ namespace Memories.Models
 
         }
 
-        public Photo(string description = "" )
+        public Photo(string description = null )
         {
            
             Description = description;

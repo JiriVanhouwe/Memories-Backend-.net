@@ -12,12 +12,14 @@ namespace Memories.Data.Mappers
     {
         public void Configure(EntityTypeBuilder<User> builder)
         {
-            builder.HasKey(t => t.Id);
+            builder.ToTable("User");
+            builder.HasKey(t => t.UserId);
             builder.Property(t => t.FirstName).IsRequired().HasMaxLength(50);
             builder.Property(t => t.LastName).IsRequired().HasMaxLength(50);
             builder.Property(t => t.Email).IsRequired();
 
-            builder.HasMany(t => t.Memories).WithOne(t => t.Organizer).IsRequired().OnDelete(DeleteBehavior.Cascade);
+            builder.HasMany(t => t.Memories).WithOne().OnDelete(DeleteBehavior.Cascade);
+            
             builder.HasMany(t => t.Friends).WithOne().OnDelete(DeleteBehavior.Restrict);
         }
     }

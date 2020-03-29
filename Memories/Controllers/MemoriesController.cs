@@ -29,7 +29,7 @@ namespace Memories.Controllers
         [HttpGet]  
         public IEnumerable<Memory> GetMemories() 
         {
-            return _memoryRepository.GetAll().OrderBy(m => m.StartDate).ToList();
+            return _memoryRepository.GetAll().OrderBy(m => m.StartDate).ToList(); //VRAAG: moet ik hier een userid meegeven?
         }
 
         //GET api/memory/id
@@ -59,7 +59,7 @@ namespace Memories.Controllers
             _memoryRepository.Add(memory);
             _memoryRepository.SaveChanges();
 
-            return CreatedAtAction(nameof(GetMemory), new { id = memory.Id }, memory);
+            return CreatedAtAction(nameof(GetMemory), new { id = memory.MemoryId }, memory);
         }
 
         //PUT api/memories/id
@@ -71,7 +71,7 @@ namespace Memories.Controllers
         [HttpPut("{id}")]
         public IActionResult PutMemory(int id, Memory memory)
         {
-            if (id != memory.Id)
+            if (id != memory.MemoryId)
                 return BadRequest();
 
             _memoryRepository.Update(memory);

@@ -61,7 +61,7 @@ namespace Memories.Controllers
             _userRepository.Add(user);
             _userRepository.SaveChanges();
 
-            return CreatedAtAction(nameof(GetUser), new { id = user.Id }, user);
+            return CreatedAtAction(nameof(GetUser), new { id = user.UserId }, user);
         }
 
         //PUT api/users/id
@@ -73,7 +73,7 @@ namespace Memories.Controllers
         [HttpPut("{id}")]
         public IActionResult PutUser(int id, User user)
         {
-            if (id != user.Id)
+            if (id != user.UserId)
                 return BadRequest();
 
             _userRepository.Update(user);

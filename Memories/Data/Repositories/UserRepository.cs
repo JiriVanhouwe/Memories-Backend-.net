@@ -40,7 +40,7 @@ namespace Memories.Data.Repositories
 
         public User GetById(int id)
         {
-            return _users.SingleOrDefault(u => u.Id == id);
+            return _users.SingleOrDefault(u => u.UserId == id);
         }
 
         public void SaveChanges()
