@@ -16,7 +16,8 @@ namespace Memories.Models
         public string LastName { get; set; }
         [Required]
         public string Email { get; set; }
-        public ICollection<User> Friends { get; private set; }
+        public ICollection<UserRelation> FriendsWith { get; private set; }
+        public ICollection<UserRelation> FriendsOf { get; private set; }
         public ICollection<UserMemory> Memories { get; private set; }
         #endregion
 
@@ -31,7 +32,8 @@ namespace Memories.Models
             FirstName = firstName;
             LastName = lastName;
             Email = email;
-            Friends = new List<User>();
+            FriendsWith = new List<UserRelation>();
+            FriendsOf = new List<UserRelation>();
             Memories = new List<UserMemory>();
         }
         #endregion
@@ -39,7 +41,18 @@ namespace Memories.Models
         #region METHODS
         public void AddFriend(User user)
         {
-            Friends.Add(user);
+            FriendsWith.Add(new UserRelation(this, user));
+            FriendsOf.Add(new UserRelation(user, this));
+        }
+
+        public void RemoveFriend(User user)
+        {
+            UserRelation ur = FriendsWith.FirstOrDefault(u => u.FriendWith == user);
+            UserRelation ur2 = FriendsOf.FirstOrDefault(u => u.FriendOf == user);
+            FriendsWith.Remove(ur);
+            FriendsWith.Remove(ur2);
+            FriendsOf.Remove(ur);
+            FriendsOf.Remove(ur2);
         }
 
         public void AddMemory(Memory memory)

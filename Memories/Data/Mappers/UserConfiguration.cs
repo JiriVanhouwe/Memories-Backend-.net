@@ -16,11 +16,7 @@ namespace Memories.Data.Mappers
             builder.HasKey(t => t.UserId);
             builder.Property(t => t.FirstName).IsRequired().HasMaxLength(50);
             builder.Property(t => t.LastName).IsRequired().HasMaxLength(50);
-            builder.Property(t => t.Email).IsRequired();
-
-            builder.HasMany(t => t.Memories).WithOne().OnDelete(DeleteBehavior.Cascade);
-            
-            builder.HasMany(t => t.Friends).WithOne().OnDelete(DeleteBehavior.Restrict);
+            builder.Property(t => t.Email).IsRequired();            
         }
     }
 }

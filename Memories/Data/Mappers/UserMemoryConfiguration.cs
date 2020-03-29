@@ -17,7 +17,7 @@ namespace Memories.Data.Mappers
             builder.HasKey(t => new { t.UserId, t.MemoryId });
 
             builder.HasOne(t => t.User).WithMany(t => t.Memories).HasForeignKey(t => t.UserId).OnDelete(DeleteBehavior.Cascade);
-            builder.HasOne(t => t.Memory).WithMany(t => t.Members).HasForeignKey(t => t.MemoryId).OnDelete(DeleteBehavior.Cascade);
+            builder.HasOne(t => t.Memory).WithMany(t => t.Members).HasForeignKey(t => t.MemoryId);
 
         }
     }
