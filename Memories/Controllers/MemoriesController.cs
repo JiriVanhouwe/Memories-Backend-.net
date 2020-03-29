@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Memories.DTOs;
 using Memories.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -54,12 +55,13 @@ namespace Memories.Controllers
         /// <param name="memory">The new memory.</param>
         /// <returns></returns>
         [HttpPost]
-        public ActionResult<Memory> CreateMemory(Memory memory)
+        public ActionResult<Memory> CreateMemory(MemoryDTO memory)
         {
-            _memoryRepository.Add(memory);
+            Memory memoryToCreate = new Memory() {Title = memory.Title, SubTitle = memory.SubTitle, StartDate = memory.StartDate, EndDate = memory.EndDate, Location = memory.Location };
+            _memoryRepository.Add(memoryToCreate);
             _memoryRepository.SaveChanges();
 
-            return CreatedAtAction(nameof(GetMemory), new { id = memory.MemoryId }, memory);
+            return CreatedAtAction(nameof(GetMemory), new { id = memoryToCreate.MemoryId }, memoryToCreate);
         }
 
         //PUT api/memories/id

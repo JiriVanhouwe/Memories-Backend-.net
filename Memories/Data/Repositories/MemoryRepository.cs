@@ -17,7 +17,6 @@ namespace Memories.Data.Repositories
         {
             _context = dbContext;
             _memories = dbContext.Memories;
-
         }
 
         public void Add(Memory memory)

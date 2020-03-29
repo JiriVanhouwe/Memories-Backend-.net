@@ -13,12 +13,6 @@
       <HashCode>AAAAAAAAAAAAAGAAAAIAAECgAAAQAAAAAAQAQEAAAAA=</HashCode>
       <FileName>Models\Memory.cs</FileName>
     </TypeIdentifier>
-    <ShowAsAssociation>
-      <Property Name="Location" />
-    </ShowAsAssociation>
-    <ShowAsCollectionAssociation>
-      <Property Name="Photos" />
-    </ShowAsCollectionAssociation>
   </Class>
   <Class Name="Memories.Models.Photo">
     <Position X="4.25" Y="5" Width="2.5" />

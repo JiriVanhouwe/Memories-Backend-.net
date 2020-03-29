@@ -57,11 +57,12 @@ namespace Memories.Controllers
         /// <returns></returns>
         [HttpPost]
         public ActionResult<User> CreateUser(User user)
-        {
-            _userRepository.Add(user);
+        {//r(string firstName, string lastName, string email)
+            User userToCreate = new User() {FirstName = user.FirstName, LastName = user.LastName, Email = user.Email };
+            _userRepository.Add(userToCreate);
             _userRepository.SaveChanges();
 
-            return CreatedAtAction(nameof(GetUser), new { id = user.UserId }, user);
+            return CreatedAtAction(nameof(GetUser), new { id = userToCreate.UserId }, userToCreate);
         }
 
         //PUT api/users/id

@@ -23,8 +23,7 @@ namespace Memories.Models
 
         public Photo(string description = null )
         {
-           
-            Description = description;
+         Description = description;
         } 
         #endregion
     }
