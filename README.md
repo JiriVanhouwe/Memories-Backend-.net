@@ -6,12 +6,62 @@ Requirements backend Web IV
 de readme
 
 ☐ Printscreen van de API zoals weergegeven in swagger. Per endpoint een printscreen van de parameters en de responses
+Overzicht swagger
 ![SwaggerOverzicht](https://i.imgur.com/jBFyRYF.png)
 
 
+api/memories - GET
+![SwaggerOverzicht](https://i.imgur.com/cSWA69k.png)
+
+![SwaggerOverzicht](https://i.imgur.com/XscJoko.png)
+
+api/memories - POST
+![SwaggerOverzicht](https://i.imgur.com/4rIk9N5.png)
+
+![SwaggerOverzicht](https://i.imgur.com/hXhXUQ7.png)
+
+![SwaggerOverzicht](https://i.imgur.com/Qsyct2n.png)
+
+api/memories/id - GET
+![SwaggerOverzicht](https://i.imgur.com/tc7l1MY.png)
+
+![SwaggerOverzicht](https://i.imgur.com/2gQXoea.png)
+
+![SwaggerOverzicht](https://i.imgur.com/ZmM4fNy.png)
+
+api/memories/id - PUT
+![SwaggerOverzicht](https://i.imgur.com/8m6KYYi.png)
+
+![SwaggerOverzicht](https://i.imgur.com/fz1eycA.png)
+
+![SwaggerOverzicht](https://i.imgur.com/E4vTEka.png)
+
+api/memories/id - DELETE
+![SwaggerOverzicht](https://i.imgur.com/oXvnSEQ.png)
+
+![SwaggerOverzicht](https://i.imgur.com/B3meDzL.png)
+
+![SwaggerOverzicht](https://i.imgur.com/sCScplr.png)
 
 
-https://imgur.com/jBFyRYF
+api/users - GET
+
+api/users - POST
+
+api/users/id - GET
+
+api/users/id - PUT
+
+api/users/id - DELETE
+
+
+
+
+
+
+
+
+
 
 ☐ Printscreen van het klassendiagram van de domeinlaag (toont de klassen met properties en methodes (inclusief de datatypes) en de associaties)(meer op https://fmoralesdev.com/2019/05/16/generate-class-diagram-vs2019-net-core/)
 
