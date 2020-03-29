@@ -22,7 +22,7 @@ namespace Memories.Models
 
         [Required]
         public  Location Location { get; set; }
-       // public ICollection<User> Members { get; private set; }
+        public ICollection<UserMemory> Members { get; private set; }
         #endregion
 
         #region CONSTRUCTOR
@@ -39,7 +39,7 @@ namespace Memories.Models
             EndDate = endDate;
             Location = location;
             Photos = new List<Photo>();
-           // Members = new List<User>();
+            Members = new List<UserMemory>();
         }
         #endregion
 
@@ -58,15 +58,16 @@ namespace Memories.Models
             Photos.Remove(photo);
         }
 
-      /*  public void AddMember(User user)
+        public void AddMember(User user)
         {
-            Members.Add(user);
+            Members.Add(new UserMemory(user, this));
         }
 
         public void RemoveMember(User user)
         {
-            Members.Remove(user);
-        }*/
+            UserMemory um = Members.FirstOrDefault(t => t.User == user);
+            Members.Remove(um);
+        }
         #endregion
 
 

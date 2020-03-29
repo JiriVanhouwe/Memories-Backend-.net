@@ -17,7 +17,7 @@ namespace Memories.Models
         [Required]
         public string Email { get; set; }
         public ICollection<User> Friends { get; private set; }
-        public ICollection<Memory> Memories { get; private set; }
+        public ICollection<UserMemory> Memories { get; private set; }
         #endregion
 
 
@@ -32,7 +32,7 @@ namespace Memories.Models
             LastName = lastName;
             Email = email;
             Friends = new List<User>();
-            Memories = new List<Memory>();
+            Memories = new List<UserMemory>();
         }
         #endregion
 
@@ -44,10 +44,15 @@ namespace Memories.Models
 
         public void AddMemory(Memory memory)
         {
-            Memories.Add(memory);
+            Memories.Add(new UserMemory(this, memory));
         }
 
+        public void RemoveMemory(Memory memory)
+        {
+            UserMemory um = Memories.FirstOrDefault(t => t.Memory == memory);
+            Memories.Remove(um);
 
+        }
         #endregion
     }
 }

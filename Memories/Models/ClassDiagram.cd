@@ -10,9 +10,15 @@
   <Class Name="Memories.Models.Memory">
     <Position X="3.5" Y="0.75" Width="6.75" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAGAAAAIAAECgAAAQAAAAAAQAQEAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAGAAAAIAAECgAAAQAAAAAAQEQEAAAAA=</HashCode>
       <FileName>Models\Memory.cs</FileName>
     </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Location" />
+    </ShowAsAssociation>
+    <ShowAsCollectionAssociation>
+      <Property Name="Photos" />
+    </ShowAsCollectionAssociation>
   </Class>
   <Class Name="Memories.Models.Photo">
     <Position X="4.25" Y="5" Width="2.5" />
@@ -22,34 +28,24 @@
     </TypeIdentifier>
   </Class>
   <Class Name="Memories.Models.User">
-    <Position X="11.5" Y="1.25" Width="3.5" />
+    <Position X="12" Y="1" Width="3.5" />
     <AssociationLine Name="Friends" Type="Memories.Models.User" ManuallyRouted="true">
       <Path>
-        <Point X="12.728" Y="3.959" />
-        <Point X="12.728" Y="4.209" />
-        <Point X="13.796" Y="4.209" />
-        <Point X="13.796" Y="3.959" />
+        <Point X="13.235" Y="4.094" />
+        <Point X="13.235" Y="4.344" />
+        <Point X="14.29" Y="4.344" />
+        <Point X="14.29" Y="4.094" />
       </Path>
       <MemberNameLabel ManuallyPlaced="true">
         <Position X="-2.017" Y="0.192" />
       </MemberNameLabel>
     </AssociationLine>
-    <AssociationLine Name="Memories" Type="Memories.Models.Memory" FixedFromPoint="true">
-      <Path>
-        <Point X="11.5" Y="1.375" />
-        <Point X="10.25" Y="1.375" />
-      </Path>
-      <MemberNameLabel ManuallyPlaced="true" ManuallySized="true">
-        <Position X="0.165" Y="0.28" Height="0.182" Width="2.345" />
-      </MemberNameLabel>
-    </AssociationLine>
     <TypeIdentifier>
-      <HashCode>AAEAAEAABCAAAAAAAAAAAAgAAAAAABAAAAAAAIAAAAg=</HashCode>
+      <HashCode>AAEAAEAABCAAAACAAAAAAAgAAAAAABAAAAAAAIAAAAg=</HashCode>
       <FileName>Models\User.cs</FileName>
     </TypeIdentifier>
     <ShowAsCollectionAssociation>
       <Property Name="Friends" />
-      <Property Name="Memories" />
     </ShowAsCollectionAssociation>
   </Class>
   <Interface Name="Memories.Models.IMemoryRepository">

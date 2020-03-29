@@ -27,7 +27,7 @@ namespace Memories.Data
             modelBuilder.ApplyConfiguration(new MemoryConfiguration());
             modelBuilder.ApplyConfiguration(new PhotoConfiguration());
             modelBuilder.ApplyConfiguration(new UserConfiguration());
-
+            modelBuilder.ApplyConfiguration(new UserMemoryConfiguration());
         }
 
 
