@@ -1,21 +1,22 @@
 # 1920-a1-be-JiriVanhouwe
-1920-a1-be-JiriVanhouwe created by GitHub Classroom
 
 Concept
 -------
-Het overkomt iedereen wel eens: je mijmert over afgelopen zomer, een uitstap of evenement en je kan een gelukzalige glimlach niet onderdrukken. De vraag is echter, waar bevindt het beeldmateriaal zich? 
+Het overkomt iedereen wel eens: je mijmert over afgelopen zomer, een uitstap of evenement en je kan een gelukzalige glimlach niet onderdrukken. Kon je zo'n moment nog maar eens herbeleven... 
 
 Met wat geluk heb je zelf enkele beelden geschoten maar het is niet ontdenkbaar dat jouw vrienden ook enkele parels op hun smartphone hebben staan. Met 'Memories' kan je in enkele klikken herinneringen delen met vrienden en naar hartenlust foto's toevoegen. Op die manier zal geen beeld je nog ontgaan en heb je op een eenvoudige wijze alle foto's van een uitstap verzameld.
 
 Voorbereiding feedback moment en vragen
 ---------------------------------------
-1) Ik moet toegeven dat ik lang heb staan sukkelen met het domein en de databank. Een user heeft meerdere memories maar aangezien ik die wil kunnen delen met andere users, behoren memories alsook tot meerdere users. Via een tussentabel hoop ik dit euvel het hoofd te bieden. Lijkt dit u een goede oplossing? (Zie class diagram klasse UserMemory)
+1) Ik moet toegeven dat ik lang heb staan sukkelen met het domein en de databank. Een user heeft meerdere memories en aangezien hij die wil kunnen delen met andere users, behoren memories alsook tot meerdere users. Via een tussentabel hoop ik dit euvel het hoofd te bieden. Lijkt dit u een goede oplossing? (Zie class diagram klasse UserMemory)
 
 2) Om op een snelle manier herinneringen te sharen, lijkt het me tof als elk account vrienden kan toevoegen. De klasse user kent dus een lijst met 'vrienden'. Ik wist niet goed hoe dit te implementeren, ook hier heb ik gekozen voor een tussentabel maar het was niet van de poes om die vorm te geven. Ik denk dat het gelukt is maar iets in mij zegt dat er een betere oplossing moet zijn. Wat denkt u? (Zie class diagram en tabel UserRelation)
 
 3) Moet ik in de MemoriesController ergens een specifiek UserId meegeven zodat de herinneringen van de ingelogde persoon kan laden? Of komt dit in orde zodra een user inlogt?
 
 4) Via MemoriesController kan je een memory aanpassen. Gezien een memory zijn eigen foto's kent, volstaat het dan om (op regel 80 in MemoriesController) de memory aan te passen en op te slaan? Of moet ik eerst de methode AddMemory uit Memory oproepen en nadien opslaan? Of beiden?
+
+5) Ik heb momenteel nog een PhotoRepository staan. Echter kan ik aan alle foto's via Memory. Is het dan nog interessant om dit op te splitsen?
 
  Printscreen van de API zoals weergegeven in swagger
 ----------------------------------------------------
