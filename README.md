@@ -1,11 +1,15 @@
 # 1920-a1-be-JiriVanhouwe
 1920-a1-be-JiriVanhouwe created by GitHub Classroom
 
-Requirements backend Web IV
+Concept
+-------
 
-de readme
+Voorbereiding feedback moment : Opsomming van de vragen die je hebt over je backend project en waarover je feedback wenst
+--------------------------------------------------------------------------------------------------------------------------
 
-☐ Printscreen van de API zoals weergegeven in swagger. Per endpoint een printscreen van de parameters en de responses
+ Printscreen van de API zoals weergegeven in swagger. Per endpoint een printscreen van de parameters en de responses
+--------------------------------------------------------------------------------------------------------------------
+
 Overzicht swagger
 ![SwaggerOverzicht](https://i.imgur.com/jBFyRYF.png)
 
@@ -82,48 +86,39 @@ api/users/id - DELETE
 
 
 
+Printscreen van het klassendiagram van de domeinlaag (toont de klassen met properties en methodes 
+-------------------------------------------------------------------------------------------------
+![Klassendiagram](https://i.imgur.com/2dGlVH9.png)
 
 
+Domeinlaag
+----------
 
+CHECK: Het domein bevat minstens 2 geassocieerde klassen
 
+CHECK: Klassen bevatten toestand en gedrag
 
+CHECK: Klassendiagram is aangemaakt, toont de properties, methodes en de associaties
 
-☐ Printscreen van het klassendiagram van de domeinlaag (toont de klassen met properties en methodes (inclusief de datatypes) en de associaties)(meer op https://fmoralesdev.com/2019/05/16/generate-class-diagram-vs2019-net-core/)
+Datalaag
+--------
 
-☐ Opsomming van de instellingen die nodig zijn om je backend project lokaal te runnen, indien nodig
+CHECK: DataContext is aangemaakt
 
-☐ Opsomming van de eventuele extra’s
+CHECK: Mapping is geïmplementeerd 
 
-☐ Voorbereiding feedback moment :
-
-- dit document waarin je aanvinkt wat je reeds hebt gerealiseerd
-
-- Opsomming van de vragen die je hebt over je backend project en waarover je feedback wenst
-
-Domein laag
-
-☐ Het domein bevat minstens 2 geassocieerde klassen
-
-☐ Klassen bevatten toestand en gedrag
-
-☐ Klassendiagram is aangemaakt, toont de properties, methodes en de associaties
-
-Data laag
-
-☐ DataContext is aangemaakt
-
-☐ Mapping is geïmplementeerd (In DataContext zoals in Recipe REST API voorbeeld, of a.d.h.v. Mapper klassen)
-
-☐ Databank wordt geseed met data (In DataContext zoals in Recipe REST API voorbeeld, of via initializer)
+CHECK: Databank wordt geseed met data -> Ik wil/moet er nog wat extra data in stoppen.
 
 Controller
+----------
 
-☐ Minstens 1 controller met endpoints voor de CRUD operaties
+CHECK: Minstens 1 controller met endpoints voor de CRUD operaties
 
-☐ De endpoints zijn gedefinieerd volgens de best practices
+CHECK: De endpoints zijn gedefinieerd volgens de best practices
 
-☐ Enkel de benodigde data wordt uitgewisseld (DTO’s indien nodig)
+CHECK: Enkel de benodigde data wordt uitgewisseld (DTO’s indien nodig)
 
 Swagger
+-------
 
-☐ De documentatie is opgestel
+CHECK: De documentatie is opgesteld
