@@ -18,6 +18,45 @@ Voorbereiding feedback moment en vragen
 
 5) Ik heb momenteel nog een PhotoRepository staan. Echter kan ik aan alle foto's via Memory. Is het dan nog interessant om dit op te splitsen?
 
+
+Domeinlaag
+----------
+
+CHECK: Het domein bevat minstens 2 geassocieerde klassen
+
+CHECK: Klassen bevatten toestand en gedrag
+
+CHECK: Klassendiagram is aangemaakt, toont de properties, methodes en de associaties
+
+Datalaag
+--------
+
+CHECK: DataContext is aangemaakt
+
+CHECK: Mapping is geïmplementeerd 
+
+CHECK: Databank wordt geseed met data -> Ik wil/moet er nog wat extra data in stoppen.
+
+Controller
+----------
+
+CHECK: Minstens 1 controller met endpoints voor de CRUD operaties
+
+CHECK: De endpoints zijn gedefinieerd volgens de best practices
+
+CHECK: Enkel de benodigde data wordt uitgewisseld (DTO’s indien nodig)
+
+Swagger
+-------
+
+CHECK: De documentatie is opgesteld
+
+
+Printscreen van het klassendiagram van de domeinlaag 
+----------------------------------------------------
+![Klassendiagram](https://i.imgur.com/2dGlVH9.png)
+
+
  Printscreen van de API zoals weergegeven in swagger
 ----------------------------------------------------
 
@@ -103,41 +142,3 @@ api/users/id - DELETE
 
 ![SwaggerOverzicht](https://i.imgur.com/O7yMotj.png)
 
-
-
-Printscreen van het klassendiagram van de domeinlaag 
-----------------------------------------------------
-![Klassendiagram](https://i.imgur.com/2dGlVH9.png)
-
-
-Domeinlaag
-----------
-
-CHECK: Het domein bevat minstens 2 geassocieerde klassen
-
-CHECK: Klassen bevatten toestand en gedrag
-
-CHECK: Klassendiagram is aangemaakt, toont de properties, methodes en de associaties
-
-Datalaag
---------
-
-CHECK: DataContext is aangemaakt
-
-CHECK: Mapping is geïmplementeerd 
-
-CHECK: Databank wordt geseed met data -> Ik wil/moet er nog wat extra data in stoppen.
-
-Controller
-----------
-
-CHECK: Minstens 1 controller met endpoints voor de CRUD operaties
-
-CHECK: De endpoints zijn gedefinieerd volgens de best practices
-
-CHECK: Enkel de benodigde data wordt uitgewisseld (DTO’s indien nodig)
-
-Swagger
--------
-
-CHECK: De documentatie is opgesteld
