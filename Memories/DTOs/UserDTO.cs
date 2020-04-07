@@ -17,10 +17,15 @@ namespace Memories.DTOs
         [Required]
         public string Email { get; set; }
 
+        public UserDTO()
+        {
+
+        }
+
         public UserDTO(string firstName, string lastName, string email)
         {
             FirstName = firstName;
-            LastName = LastName;
+            LastName = lastName;
             Email = email;
         }
     }

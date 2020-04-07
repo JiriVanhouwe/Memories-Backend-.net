@@ -9,6 +9,7 @@ namespace Memories.Models
     {
         User GetById(int id);
         User GetByEmail(string email);
+      //  IEnumerable<User> GetFriends(int id);
         void Update(User user);
         void Add(User user);
         void Delete(User user);

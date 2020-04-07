@@ -48,5 +48,12 @@ namespace Memories.Data.Repositories
         {
             _context.SaveChanges();
         }
+
+      /*  public IEnumerable<User> GetFriends(int id)
+        {
+            User user = GetById(id);
+
+            return user.FriendsWith.Select(f => f.FriendWith).OrderBy(f => f.FirstName).ThenBy(f => f.LastName).ToList();
+        }*/
     }
 }

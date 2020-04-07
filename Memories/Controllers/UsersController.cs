@@ -38,22 +38,6 @@ namespace Memories.Controllers
             return new UserDTO(user.FirstName, user.LastName, user.Email);
         }
 
-        //GET api/users/id
-        /// <summary>
-        /// Get a user with a given id.
-        /// </summary>
-        /// <param name="id">The id of a user.</param>
-        /// <returns>The user. </returns>
-        [HttpGet("{id}")]
-        public ActionResult<User> GetUserById(int id)
-        {
-            User user = _userRepository.GetById(id);
-            if (user == null)
-                return NotFound();
-
-            return user;
-        }
-
 
         //POST api/users
         /// <summary>
@@ -68,7 +52,7 @@ namespace Memories.Controllers
             _userRepository.Add(userToCreate);
             _userRepository.SaveChanges();
 
-            return CreatedAtAction(nameof(GetUserByEmail), new { id = userToCreate.UserId }, userToCreate);
+            return CreatedAtAction(nameof(GetUserByEmail), new { email = userToCreate.Email }, userToCreate);
         }
 
         //PUT api/users/id
@@ -87,6 +71,8 @@ namespace Memories.Controllers
             _userRepository.SaveChanges();
             return NoContent();
         }
+
+
 
         //DELETE api/users/id
         /// <summary>

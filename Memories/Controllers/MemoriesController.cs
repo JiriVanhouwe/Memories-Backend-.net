@@ -40,13 +40,14 @@ namespace Memories.Controllers
         /// <param name="id">The id of the memory.</param>
         /// <returns>The memory.</returns>
         [HttpGet("{id}")]
-        public ActionResult<Memory> GetMemory(int id)
+        public ActionResult<MemoryDTO> GetMemory(int id)
         {
             Memory memory = _memoryRepository.GetById(id);
             if (memory == null) return NotFound();
 
-            return memory;
+            return new MemoryDTO(memory.Title, memory.SubTitle, memory.StartDate, memory.EndDate, memory.Location, memory.Photos, memory.Members);
         }
+
 
         //POST api/memories
         /// <summary>
@@ -55,7 +56,7 @@ namespace Memories.Controllers
         /// <param name="memory">The new memory.</param>
         /// <returns></returns>
         [HttpPost]
-        public ActionResult<Memory> CreateMemory(MemoryDTOWithouthPhotos memory)
+        public ActionResult<Memory> CreateMemory(MemoryWithoutPhotosDTO memory)
         {
             Memory memoryToCreate = new Memory() {Title = memory.Title, SubTitle = memory.SubTitle, StartDate = memory.StartDate, EndDate = memory.EndDate, Location = memory.Location };
             _memoryRepository.Add(memoryToCreate);
@@ -80,6 +81,7 @@ namespace Memories.Controllers
             _memoryRepository.SaveChanges();
             return NoContent();
         }
+
 
         //DELETE api/memories/id
         /// <summary>

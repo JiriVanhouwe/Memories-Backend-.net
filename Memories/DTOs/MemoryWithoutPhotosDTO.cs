@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Memories.DTOs
 {
-    public class MemoryDTOWithouthPhotos
+    public class MemoryWithoutPhotosDTO
     {
         [Required]
         public string Title { get; set; }
@@ -23,5 +23,19 @@ namespace Memories.DTOs
 
         [Required]
         public Location Location { get; set; }
+
+        public MemoryWithoutPhotosDTO()
+        {
+
+        }
+
+        public MemoryWithoutPhotosDTO(string title, string subTitle, DateTime startDate, DateTime endDate, Location location)
+        {
+            Title = title;
+            SubTitle = subTitle;
+            StartDate = startDate;
+            EndDate = endDate;
+            Location = location;
+        }
     }
 }

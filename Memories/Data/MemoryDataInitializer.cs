@@ -29,6 +29,7 @@ namespace Memories.Data
                 //users
                 User jiri = new User("Jiri", "Vanhouwe", "jiri.vanhouwe@gmail.com");
                 User angelique = new User("Angelique", "Daponte", "angelique.daponte@gmail.com");
+                
                 _dbContext.Users.Add(jiri);
                 _dbContext.Users.Add(angelique);
 

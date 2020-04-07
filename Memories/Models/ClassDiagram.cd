@@ -17,7 +17,7 @@
       </Path>
     </AssociationLine>
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAGAAAAIAAECgAAAQAAAAAAQEQEAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAGAAAAIAAECgAQAwAAAAAAQEQEAAAAA=</HashCode>
       <FileName>Models\Memory.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
@@ -37,6 +37,11 @@
   </Class>
   <Class Name="Memories.Models.User">
     <Position X="11.5" Y="4.25" Width="3.5" />
+    <AssociationLine Name="FriendsWith" Type="Memories.Models.UserRelation">
+      <MemberNameLabel ManuallyPlaced="true" ManuallySized="true">
+        <Position X="0.066" Y="0.075" Height="0.182" Width="2.687" />
+      </MemberNameLabel>
+    </AssociationLine>
     <AssociationLine Name="FriendsOf" Type="Memories.Models.UserRelation">
       <MemberNameLabel ManuallyPlaced="true" ManuallySized="true">
         <Position X="0.27" Y="0.118" Height="0.182" Width="2.483" />
@@ -47,19 +52,14 @@
         <Position X="-2.627" Y="0.123" />
       </MemberNameLabel>
     </AssociationLine>
-    <AssociationLine Name="FriendsWith" Type="Memories.Models.UserRelation">
-      <MemberNameLabel ManuallyPlaced="true" ManuallySized="true">
-        <Position X="0.066" Y="0.075" Height="0.182" Width="2.687" />
-      </MemberNameLabel>
-    </AssociationLine>
     <TypeIdentifier>
       <HashCode>AAEAAEAAACAAAACACgAAAAgAAAAAABAAAAAIAIAAAAg=</HashCode>
       <FileName>Models\User.cs</FileName>
     </TypeIdentifier>
     <ShowAsCollectionAssociation>
+      <Property Name="FriendsWith" />
       <Property Name="FriendsOf" />
       <Property Name="Memories" />
-      <Property Name="FriendsWith" />
     </ShowAsCollectionAssociation>
   </Class>
   <Class Name="Memories.Models.UserMemory">
@@ -83,17 +83,10 @@
       <FileName>Models\IMemoryRepository.cs</FileName>
     </TypeIdentifier>
   </Interface>
-  <Interface Name="Memories.Models.IPhotoRepository">
-    <Position X="1.5" Y="3.5" Width="2.5" />
-    <TypeIdentifier>
-      <HashCode>gAYAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAIA=</HashCode>
-      <FileName>Models\IPhotoRepository.cs</FileName>
-    </TypeIdentifier>
-  </Interface>
   <Interface Name="Memories.Models.IUserRepository">
     <Position X="1.5" Y="5.5" Width="2.5" />
     <TypeIdentifier>
-      <HashCode>gAYAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAgAAAAAAAIA=</HashCode>
+      <HashCode>gAYAAAAAAAAAAAAAAAAAAAAAAAGAAAAAAAAAAAAAAIA=</HashCode>
       <FileName>Models\IUserRepository.cs</FileName>
     </TypeIdentifier>
   </Interface>
