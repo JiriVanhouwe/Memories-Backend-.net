@@ -19,8 +19,8 @@ namespace Memories.Data.Mappers
             builder.Property(t => t.Title).IsRequired().HasMaxLength(50);
 
             builder.HasOne(t => t.Location).WithMany().IsRequired().OnDelete(DeleteBehavior.Restrict);
-            builder.HasMany(t => t.Photos).WithOne().OnDelete(DeleteBehavior.Cascade);
-            //builder.HasMany(t => t.Members).WithOne().OnDelete(DeleteBehavior.Restrict);
+            builder.HasMany(t => t.Photos).WithOne().IsRequired().OnDelete(DeleteBehavior.Cascade);
+          
         }
     }
 }

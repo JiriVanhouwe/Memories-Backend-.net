@@ -28,9 +28,9 @@ namespace Memories.Data.Repositories
             _users.Remove(user);
         }
 
-        public IEnumerable<User> GetAll()
+        public User GetByEmail(string email)
         {
-            return _users.ToList();
+            return _users.SingleOrDefault(u => u.Email == email);
         }
 
         public void Update(User user)
@@ -42,6 +42,7 @@ namespace Memories.Data.Repositories
         {
             return _users.SingleOrDefault(u => u.UserId == id);
         }
+
 
         public void SaveChanges()
         {

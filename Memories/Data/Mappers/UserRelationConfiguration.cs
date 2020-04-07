@@ -19,8 +19,7 @@ namespace Memories.Data.Mappers
             builder.HasOne(t => t.FriendOf).WithMany(t => t.FriendsOf).HasForeignKey(t => t.FriendOfId).OnDelete(DeleteBehavior.Restrict);
             builder.HasOne(t => t.FriendWith).WithMany(t => t.FriendsWith).HasForeignKey(t => t.FriendWithId);
 
-            //KEY constraint 'FK_UserRelation_User_FriendWithId' on table 'UserRelation' may cause cycles or multiple cascade paths. 
-            //Specify ON DELETE NO ACTION or ON UPDATE NO ACTION, or modify other FOREIGN KEY constraints.
+
         }
     }
 }

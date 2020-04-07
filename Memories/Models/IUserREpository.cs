@@ -8,7 +8,7 @@ namespace Memories.Models
     public interface IUserRepository
     {
         User GetById(int id);
-        IEnumerable<User> GetAll();
+        User GetByEmail(string email);
         void Update(User user);
         void Add(User user);
         void Delete(User user);

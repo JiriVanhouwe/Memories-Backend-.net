@@ -35,7 +35,6 @@ namespace Memories
 
             services.AddScoped<MemoryDataInitializer>();
             services.AddScoped<IMemoryRepository, MemoryRepository>();
-            services.AddScoped<IPhotoRepository, PhotoRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
 
             //extra info toevoegen op swagger

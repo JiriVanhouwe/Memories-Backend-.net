@@ -30,7 +30,7 @@ namespace Memories.Controllers
         [HttpGet]  
         public IEnumerable<Memory> GetMemories() 
         {
-            return _memoryRepository.GetAll().OrderBy(m => m.StartDate).ToList(); //VRAAG: moet ik hier een userid meegeven?
+            return _memoryRepository.GetAll().OrderBy(m => m.StartDate).ToList();
         }
 
         //GET api/memory/id
@@ -55,7 +55,7 @@ namespace Memories.Controllers
         /// <param name="memory">The new memory.</param>
         /// <returns></returns>
         [HttpPost]
-        public ActionResult<Memory> CreateMemory(MemoryDTO memory)
+        public ActionResult<Memory> CreateMemory(MemoryDTOWithouthPhotos memory)
         {
             Memory memoryToCreate = new Memory() {Title = memory.Title, SubTitle = memory.SubTitle, StartDate = memory.StartDate, EndDate = memory.EndDate, Location = memory.Location };
             _memoryRepository.Add(memoryToCreate);

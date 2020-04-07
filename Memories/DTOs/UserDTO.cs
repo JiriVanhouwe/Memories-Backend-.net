@@ -16,9 +16,12 @@ namespace Memories.DTOs
         
         [Required]
         public string Email { get; set; }
-       
-        public ICollection<UserDTO> Friends { get; private set; }
-       
-        public ICollection<MemoryDTO> Memories { get; private set; }
+
+        public UserDTO(string firstName, string lastName, string email)
+        {
+            FirstName = firstName;
+            LastName = LastName;
+            Email = email;
+        }
     }
 }

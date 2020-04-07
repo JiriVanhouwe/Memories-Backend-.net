@@ -10,6 +10,9 @@ namespace Memories.Models
         #region PROPERTIES
         public int PhotoId { get; set; }
         public string Description { get; set; }
+        //foto toevoegen
+        //base64 of als blob in DB
+        //of uploaden naar server en daar alles verzamelen in een map
 
         #endregion
 

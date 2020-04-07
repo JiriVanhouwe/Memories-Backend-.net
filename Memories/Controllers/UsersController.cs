@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Memories.DTOs;
 using Memories.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -21,16 +22,20 @@ namespace Memories.Controllers
             _userRepository = context;
         }
 
-
-        //GET api/users
+        //GET api/users/email
         /// <summary>
-        /// Get all the users.
+        /// Get a user with a given email.
         /// </summary>
-        /// <returns>List with all the users.</returns>
-        [HttpGet]
-        public IEnumerable<User> GetUsers()
+        /// <param name="email">The email of a user.</param>
+        /// <returns>The user. </returns>
+        [HttpGet("{email}")]
+        public ActionResult<UserDTO> GetUserByEmail(string email)
         {
-           return _userRepository.GetAll().OrderBy(u => u.FirstName).ThenBy(u => u.LastName).ToList();
+            User user = _userRepository.GetByEmail(email);
+            if (user == null)
+                return NotFound();
+
+            return new UserDTO(user.FirstName, user.LastName, user.Email);
         }
 
         //GET api/users/id
@@ -40,7 +45,7 @@ namespace Memories.Controllers
         /// <param name="id">The id of a user.</param>
         /// <returns>The user. </returns>
         [HttpGet("{id}")]
-        public ActionResult<User> GetUser(int id)
+        public ActionResult<User> GetUserById(int id)
         {
             User user = _userRepository.GetById(id);
             if (user == null)
@@ -49,6 +54,7 @@ namespace Memories.Controllers
             return user;
         }
 
+
         //POST api/users
         /// <summary>
         /// Add a new user.
@@ -56,13 +62,13 @@ namespace Memories.Controllers
         /// <param name="user">The new user.</param>
         /// <returns></returns>
         [HttpPost]
-        public ActionResult<User> CreateUser(User user)
-        {//r(string firstName, string lastName, string email)
+        public ActionResult<User> CreateUser(UserDTO user)
+        {
             User userToCreate = new User() {FirstName = user.FirstName, LastName = user.LastName, Email = user.Email };
             _userRepository.Add(userToCreate);
             _userRepository.SaveChanges();
 
-            return CreatedAtAction(nameof(GetUser), new { id = userToCreate.UserId }, userToCreate);
+            return CreatedAtAction(nameof(GetUserByEmail), new { id = userToCreate.UserId }, userToCreate);
         }
 
         //PUT api/users/id
