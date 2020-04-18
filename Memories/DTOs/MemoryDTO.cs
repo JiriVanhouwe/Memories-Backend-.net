@@ -10,6 +10,8 @@ namespace Memories.DTOs
     public class MemoryDTO
     {
         [Required]
+        public int MemoryId { get; set; }
+        [Required]
         public string Title { get; set; }
 
         [Required]
@@ -31,8 +33,9 @@ namespace Memories.DTOs
 
         }
 
-        public MemoryDTO(string title, string subTitle, DateTime startDate, DateTime endDate, Location location, ICollection<Photo> photos, ICollection<UserMemory> members)
+        public MemoryDTO(int memoryId, string title, string subTitle, DateTime startDate, DateTime endDate, Location location, ICollection<Photo> photos, ICollection<UserMemory> members)
         {
+            MemoryId = memoryId;
             Title = title;
             SubTitle = subTitle;
             StartDate = startDate;

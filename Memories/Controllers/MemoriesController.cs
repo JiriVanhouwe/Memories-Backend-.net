@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Memories.DTOs;
 using Memories.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using NPOI.SS.Formula.Functions;
+using OfficeOpenXml.FormulaParsing.Excel.Functions.Text;
 
 namespace Memories.Controllers
 {
@@ -45,7 +48,7 @@ namespace Memories.Controllers
             Memory memory = _memoryRepository.GetById(id);
             if (memory == null) return NotFound();
 
-            return new MemoryDTO(memory.Title, memory.SubTitle, memory.StartDate, memory.EndDate, memory.Location, memory.Photos, memory.Members);
+            return new MemoryDTO(memory.MemoryId, memory.Title, memory.SubTitle, memory.StartDate, memory.EndDate, memory.Location, memory.Photos, memory.Members);
         }
 
 
@@ -99,5 +102,35 @@ namespace Memories.Controllers
             _memoryRepository.SaveChanges();
             return NoContent();
          }
+        
+        /*
+        //POST api/memories/id/photos
+        /// <summary>
+        /// Saves a photo into a memory.
+        /// </summary>
+        /// <param name="memoryId">The memory id.</param>
+        /// <param name="Image">The photo.</param>
+        [HttpPost]
+        public async Task<IActionResult> CreatePhoto(int memoryId, List<IFormFile> Image)
+        {
+            Memory memory = _memoryRepository.GetById(memoryId);
+
+            foreach(var item in Image)
+            {
+                if(item.Length > 0)
+                {
+                    using(var stream = new MemoryStream())
+                    {
+                        await item.CopyToAsync(stream);
+                        memory.AddPhoto(new Photo(stream.ToArray()));
+                    }
+                }
+            }
+            _memoryRepository.Update(memory);
+            _memoryRepository.SaveChanges();
+            return NoContent();
+
+        }*/
+        
     }
 }

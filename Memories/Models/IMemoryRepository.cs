@@ -13,6 +13,5 @@ namespace Memories.Models
         void Delete(Memory memory);
         void Update(Memory memory);
         void SaveChanges();
-
     }
 }
