@@ -30,7 +30,10 @@ namespace Memories.Data.Repositories
 
         public User GetByEmail(string email)
         {
-            return _users.SingleOrDefault(u => u.Email == email);
+            // return _users.Include(u => u.FriendsOf).ThenInclude(u => u.FriendWith)
+            //.Include(u => u.Memories).ThenInclude(u => u.Memory).SingleOrDefault(u => u.Email == email);
+
+            return _users.Include(u => u.FriendsOf).ThenInclude(u => u.FriendWith).SingleOrDefault(u => u.Email == email);
         }
 
         public void Update(User user)
@@ -48,12 +51,5 @@ namespace Memories.Data.Repositories
         {
             _context.SaveChanges();
         }
-
-      /*  public IEnumerable<User> GetFriends(int id)
-        {
-            User user = GetById(id);
-
-            return user.FriendsWith.Select(f => f.FriendWith).OrderBy(f => f.FirstName).ThenBy(f => f.LastName).ToList();
-        }*/
     }
 }

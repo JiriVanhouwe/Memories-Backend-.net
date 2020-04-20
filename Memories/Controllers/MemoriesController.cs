@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
 using Memories.DTOs;
 using Memories.Models;
@@ -43,12 +44,12 @@ namespace Memories.Controllers
         /// <param name="id">The id of the memory.</param>
         /// <returns>The memory.</returns>
         [HttpGet("{id}")]
-        public ActionResult<MemoryDTO> GetMemory(int id)
+        public ActionResult<Memory> GetMemory(int id)
         {
             Memory memory = _memoryRepository.GetById(id);
             if (memory == null) return NotFound();
 
-            return new MemoryDTO(memory.MemoryId, memory.Title, memory.SubTitle, memory.StartDate, memory.EndDate, memory.Location, memory.Photos, memory.Members);
+            return memory;
         }
 
 
@@ -72,14 +73,10 @@ namespace Memories.Controllers
         /// <summary>
         /// Modifies a memory with the given id.
         /// </summary>
-        /// <param name="id">The id of the memory.</param>
         /// <param name="memory">The modified memory.</param>
         [HttpPut("{id}")]
-        public IActionResult PutMemory(int id, Memory memory)
+        public IActionResult PutMemory(Memory memory)
         {
-            if (id != memory.MemoryId)
-                return BadRequest();
-
             _memoryRepository.Update(memory);
             _memoryRepository.SaveChanges();
             return NoContent();
@@ -102,15 +99,29 @@ namespace Memories.Controllers
             _memoryRepository.SaveChanges();
             return NoContent();
          }
-        
+
         /*
+        [HttpPost]
+        [Route("api/memories/id/photos")]
+        public HttpResponseMessage UploadPhoto()
+        {
+            string imageName = null;
+            var httpRequest : HttpContext.Current.Request;
+            //upload image
+
+
+            return null;
+        }
+        */
+        
+        
         //POST api/memories/id/photos
         /// <summary>
         /// Saves a photo into a memory.
         /// </summary>
         /// <param name="memoryId">The memory id.</param>
         /// <param name="Image">The photo.</param>
-        [HttpPost]
+        [HttpPost("{id}/photos")]
         public async Task<IActionResult> CreatePhoto(int memoryId, List<IFormFile> Image)
         {
             Memory memory = _memoryRepository.GetById(memoryId);
@@ -130,7 +141,7 @@ namespace Memories.Controllers
             _memoryRepository.SaveChanges();
             return NoContent();
 
-        }*/
+        }
         
     }
 }

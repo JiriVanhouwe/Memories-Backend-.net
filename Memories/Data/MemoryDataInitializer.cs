@@ -28,9 +28,17 @@ namespace Memories.Data
                 //users
                 User jiri = new User("Jiri", "Vanhouwe", "jiri.vanhouwe@gmail.com");
                 User angelique = new User("Angelique", "Daponte", "angelique.daponte@gmail.com");
+                User frank = new User("Frank", "Deboosere", "frank.deboosere@gmail.com");
+                User paul = new User("Paul", "Jambers", "paul.jambers@gmail.com");
+                jiri.AddFriend(angelique);
+                jiri.AddFriend(frank);
+                jiri.AddFriend(paul);
                 
                 _dbContext.Users.Add(jiri);
                 _dbContext.Users.Add(angelique);
+                _dbContext.Users.Add(frank);
+                _dbContext.Users.Add(paul);
+
 
                 //memories
                 Memory reisMadrid = new Memory("Reis Madrid", "Kuieren in de binnenstad", new DateTime(2019, 5, 15), new DateTime(2019, 5, 20), madrid);
@@ -63,9 +71,20 @@ namespace Memories.Data
                 _dbContext.Photos.Add(photo3);
 
               
-                kajakkenGent.AddPhoto(photo1);
+                kajakkenGent.AddPhoto(photo1); //elk een foto
                 reisMadrid.AddPhoto(photo2);
                 dinerInAmigo.AddPhoto(photo3);
+
+                //meerdere members toevoegen aan een memory
+                kajakkenGent.AddMember(jiri);
+                kajakkenGent.AddMember(angelique);
+                reisMadrid.AddMember(jiri);
+                reisMadrid.AddMember(angelique);
+                dinerInAmigo.AddMember(paul);
+                dinerInAmigo.AddMember(frank);
+                dinerInAmigo.AddMember(jiri);
+                dinerInAmigo.AddMember(angelique);
+
 
                 _dbContext.Memories.Add(reisMadrid);
                 _dbContext.Memories.Add(kajakkenGent);

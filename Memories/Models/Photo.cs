@@ -9,7 +9,6 @@ namespace Memories.Models
     {
         #region PROPERTIES
         public int PhotoId { get; set; }
-        public string Description { get; set; }
         public byte[] Img { get; set; }
         //foto toevoegen
         //base64 of als blob in DB
@@ -25,10 +24,9 @@ namespace Memories.Models
 
         }
 
-        public Photo(byte[] Image, string description = null )
+        public Photo(byte[] Image )
         {
             Img = Image;
-            Description = description;
         } 
         #endregion
     }

@@ -16,28 +16,41 @@ namespace Memories.Controllers
     public class UsersController : ControllerBase
     {
         private readonly IUserRepository _userRepository;
+        private readonly IMemoryRepository _memoryRepository;
 
-        public UsersController(IUserRepository context)
+        public UsersController(IUserRepository context, IMemoryRepository memoRepo)
         {
             _userRepository = context;
+            _memoryRepository = memoRepo;
         }
 
         //GET api/users/email
         /// <summary>
-        /// Get a user with a given email.
+        /// Get a user and friends and memories with a given email.
         /// </summary>
         /// <param name="email">The email of a user.</param>
-        /// <returns>The user. </returns>
+        /// <returns>The user + memories + friends. </returns>
         [HttpGet("{email}")]
-        public ActionResult<UserDTO> GetUserByEmail(string email)
+        public ActionResult<UserDTOWithFriends> GetUserByEmail(string email)
         {
             User user = _userRepository.GetByEmail(email);
+
             if (user == null)
                 return NotFound();
 
-            return new UserDTO(user.FirstName, user.LastName, user.Email);
-        }
+           List<User> friends = new List<User>();
 
+            if (user.FriendsWith != null)
+            {
+                Console.WriteLine("NIET LEEG");
+                user.FriendsWith.ForEach(friend => friends.Add(_userRepository.GetById(friend.FriendWithId)));
+            } else Console.WriteLine("WEL LEEG");
+                
+
+            UserDTOWithFriends userWithFriends = new UserDTOWithFriends(user.FirstName, user.LastName, user.Email, friends);
+
+            return userWithFriends;
+        }
 
         //POST api/users
         /// <summary>
@@ -90,5 +103,8 @@ namespace Memories.Controllers
             _userRepository.SaveChanges();
             return NoContent();
         }
+
+
+
     }
 }
