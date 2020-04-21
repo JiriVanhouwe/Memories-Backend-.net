@@ -33,7 +33,7 @@ namespace Memories.Data.Repositories
             // return _users.Include(u => u.FriendsOf).ThenInclude(u => u.FriendWith)
             //.Include(u => u.Memories).ThenInclude(u => u.Memory).SingleOrDefault(u => u.Email == email);
 
-            return _users.Include(u => u.FriendsOf).ThenInclude(u => u.FriendWith).SingleOrDefault(u => u.Email == email);
+            return _users.Include(u => u.FriendsWith).ThenInclude(u => u.FriendWith).Include(u => u.FriendsOf).ThenInclude(u => u.FriendOf).SingleOrDefault(u => u.Email == email);
         }
 
         public void Update(User user)
@@ -43,7 +43,7 @@ namespace Memories.Data.Repositories
 
         public User GetById(int id)
         {
-            return _users.SingleOrDefault(u => u.UserId == id);
+            return _users.Include(u => u.FriendsWith).ThenInclude(u => u.FriendWith).Include(u => u.FriendsOf).ThenInclude(u => u.FriendOf).SingleOrDefault(u => u.UserId == id);
         }
 
 

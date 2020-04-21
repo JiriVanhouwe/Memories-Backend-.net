@@ -11,7 +11,7 @@ namespace Memories.Controllers
 {
     [ApiConventionType(typeof(DefaultApiConventions))]
     [Produces("application/json")]
-    [Route("api/users")]
+    [Route("api/friends")]
     [ApiController]
     public class UsersController : ControllerBase
     {
@@ -24,16 +24,16 @@ namespace Memories.Controllers
             _memoryRepository = memoRepo;
         }
 
-        //GET api/users/email
+        //GET api/friends/id
         /// <summary>
-        /// Get a user and friends and memories with a given email.
+        /// Get a user and friends and memories with a given id.
         /// </summary>
-        /// <param name="email">The email of a user.</param>
+        /// <param name="id">The email of a user.</param>
         /// <returns>The user + memories + friends. </returns>
-        [HttpGet("{email}")]
-        public ActionResult<UserDTOWithFriends> GetUserByEmail(string email)
+        [HttpGet("{id}")]
+        public ActionResult<UserDTOWithFriends> GetUserAndFriends(int id)
         {
-            User user = _userRepository.GetByEmail(email);
+            User user = _userRepository.GetById(id);
 
             if (user == null)
                 return NotFound();
@@ -52,7 +52,7 @@ namespace Memories.Controllers
             return userWithFriends;
         }
 
-        //POST api/users
+        //POST api/friends
         /// <summary>
         /// Add a new user.
         /// </summary>
@@ -65,37 +65,19 @@ namespace Memories.Controllers
             _userRepository.Add(userToCreate);
             _userRepository.SaveChanges();
 
-            return CreatedAtAction(nameof(GetUserByEmail), new { email = userToCreate.Email }, userToCreate);
-        }
-
-        //PUT api/users/id
-        /// <summary>
-        /// Modifies a user with the given id.
-        /// </summary>
-        /// <param name="id">The id of the user.</param>
-        /// <param name="user"></param>
-        [HttpPut("{id}")]
-        public IActionResult PutUser(int id, User user)
-        {
-            if (id != user.UserId)
-                return BadRequest();
-
-            _userRepository.Update(user);
-            _userRepository.SaveChanges();
-            return NoContent();
+            return CreatedAtAction(nameof(GetUserAndFriends), new { id = userToCreate.UserId }, userToCreate);
         }
 
 
-
-        //DELETE api/users/id
+        //DELETE api/friends/id
         /// <summary>
-        /// Deletes a user with the given id.
+        /// Deletes a friend of a user.
         /// </summary>
-        /// <param name="id">The id of a user.</param>
+        /// <param name="id">The id of the friend that will be deleted.</param>
         [HttpDelete("{id}")]
-        public ActionResult<User> DeleteUser(int id)
-        {
-            User user = _userRepository.GetById(id);
+        public ActionResult<User> DeleteUser(string id)
+        {  //TODO vriend verwijderen: moet je eerst weten wie ingelogd is! 
+            User user = _userRepository.GetByEmail(id);
             if (user == null)
                 return NotFound();
 
