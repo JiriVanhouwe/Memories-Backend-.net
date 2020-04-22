@@ -6,16 +6,17 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using Memories.DTOs;
 using Memories.Models;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using NPOI.SS.Formula.Functions;
-using OfficeOpenXml.FormulaParsing.Excel.Functions.Text;
 
 namespace Memories.Controllers
 {
     [ApiConventionType(typeof(DefaultApiConventions))]
     [Produces("application/json")]
     [Route("api/memories")]
+    [Authorize(AuthenticationSchemes =JwtBearerDefaults.AuthenticationScheme)] //je moet aangemeld zijn om de endpoints te gebruiken
     [ApiController]
     public class MemoriesController : ControllerBase
     {
@@ -99,20 +100,6 @@ namespace Memories.Controllers
             _memoryRepository.SaveChanges();
             return NoContent();
          }
-
-        /*
-        [HttpPost]
-        [Route("api/memories/id/photos")]
-        public HttpResponseMessage UploadPhoto()
-        {
-            string imageName = null;
-            var httpRequest : HttpContext.Current.Request;
-            //upload image
-
-
-            return null;
-        }
-        */
         
         
         //POST api/memories/id/photos

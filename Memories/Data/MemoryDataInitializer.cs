@@ -1,4 +1,5 @@
 ﻿using Memories.Models;
+using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -11,12 +12,14 @@ namespace Memories.Data
     public class MemoryDataInitializer
     {
         private readonly ApplicationDbContext _dbContext;
+        private readonly UserManager<IdentityUser> _userManager;
 
-        public MemoryDataInitializer(ApplicationDbContext context)
+        public MemoryDataInitializer(ApplicationDbContext context, UserManager<IdentityUser> userManager)
         {
             _dbContext = context;
+            _userManager = userManager;
         }
-        public void InitializeData()
+        public async Task InitializeData()
         {
             _dbContext.Database.EnsureDeleted();
             if (_dbContext.Database.EnsureCreated())
@@ -30,6 +33,10 @@ namespace Memories.Data
                 User angelique = new User("Angelique", "Daponte", "angelique.daponte@gmail.com");
                 User frank = new User("Frank", "Deboosere", "frank.deboosere@gmail.com");
                 User paul = new User("Paul", "Jambers", "paul.jambers@gmail.com");
+                await CreateUser(jiri.Email, "memories");
+                await CreateUser(angelique.Email, "memories");
+                await CreateUser(frank.Email, "memories");
+                await CreateUser(paul.Email, "memories");
                 jiri.AddFriend(angelique);
                 jiri.AddFriend(frank);
                 jiri.AddFriend(paul);
@@ -92,6 +99,13 @@ namespace Memories.Data
 
                 _dbContext.SaveChanges();
             }
+        }
+
+        private async Task CreateUser(string email, string password)
+        {
+            var user = new IdentityUser { UserName = email, Email = email };
+            await _userManager.CreateAsync(user, password);
+           
         }
     }
 }
