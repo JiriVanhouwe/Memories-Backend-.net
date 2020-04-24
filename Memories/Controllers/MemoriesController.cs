@@ -21,10 +21,12 @@ namespace Memories.Controllers
     public class MemoriesController : ControllerBase
     {
         private readonly IMemoryRepository _memoryRepository;
+        private readonly IUserRepository _userRepository;
 
-        public MemoriesController(IMemoryRepository context)
+        public MemoriesController(IMemoryRepository context, IUserRepository userRepo)
         {
             _memoryRepository = context;
+            _userRepository = userRepo;
         }
 
         //GET api/memories
@@ -35,6 +37,7 @@ namespace Memories.Controllers
         [HttpGet]  
         public IEnumerable<Memory> GetMemories() 
         {
+            //User user = _userRepository.GetByEmail(User.Identity.Name); -> dit moet overal aangepast worden denk ik
             return _memoryRepository.GetAll().OrderBy(m => m.StartDate).ToList();
         }
 

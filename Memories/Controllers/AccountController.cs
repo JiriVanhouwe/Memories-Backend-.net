@@ -51,6 +51,32 @@ namespace Memories.Controllers
             return BadRequest();
         }
 
+        [AllowAnonymous]
+        [HttpPost("register")]
+        public async Task<ActionResult<String>> Register(RegisterDTO model)
+        {
+            IdentityUser user = new IdentityUser { UserName = model.Email, Email = model.Email };
+            User userMemories = new User { FirstName = model.FirstName, LastName = model.LastName, Email = model.Email };
+            var result = await _userManager.CreateAsync(user, model.Password);
+
+            if (result.Succeeded)
+            {
+                _userRepository.Add(userMemories);
+                _userRepository.SaveChanges();
+                string token = GetToken(user);
+                return Created("", token);
+            }
+            return BadRequest();
+        }
+
+        [AllowAnonymous]
+        [HttpGet("checkusername")]
+        public async Task<ActionResult<Boolean>> CheckAvailableUserName(string email)
+        {
+            var user = await _userManager.FindByNameAsync(email);
+            return user == null;
+        }
+
         private string GetToken(IdentityUser user) //token = header.payload.signature header=info over het algoritme payload=info over gebruiker in vorm van claims signature=handtekening
         {
             var claims = new List<Claim> { //hier geef je info door die de frontend nodig heeft
