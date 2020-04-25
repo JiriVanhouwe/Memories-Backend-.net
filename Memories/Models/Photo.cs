@@ -9,7 +9,7 @@ namespace Memories.Models
     {
         #region PROPERTIES
         public int PhotoId { get; set; }
-        public byte[] Img { get; set; }
+        public string Base64String { get; set; }
         //foto toevoegen
         //base64 of als blob in DB
         //of uploaden naar server en daar alles verzamelen in een map
@@ -24,9 +24,9 @@ namespace Memories.Models
 
         }
 
-        public Photo(byte[] Image )
+        public Photo(string img )
         {
-            Img = Image;
+            Base64String = img;
         } 
         #endregion
     }

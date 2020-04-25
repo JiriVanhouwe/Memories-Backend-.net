@@ -33,10 +33,10 @@ namespace Memories.Data
                 User angelique = new User("Angelique", "Daponte", "angelique.daponte@gmail.com");
                 User frank = new User("Frank", "Deboosere", "frank.deboosere@gmail.com");
                 User paul = new User("Paul", "Jambers", "paul.jambers@gmail.com");
-                await CreateUser(jiri.Email, "memories");
-                await CreateUser(angelique.Email, "memories");
-                await CreateUser(frank.Email, "memories");
-                await CreateUser(paul.Email, "memories");
+                await CreateUser(jiri.Email, "Memories1");
+                await CreateUser(angelique.Email, "Memories1");
+                await CreateUser(frank.Email, "Memories1");
+                await CreateUser(paul.Email, "Memories1");
                 jiri.AddFriend(angelique);
                 jiri.AddFriend(frank);
                 jiri.AddFriend(paul);
@@ -56,27 +56,18 @@ namespace Memories.Data
                 Image image = Image.FromFile("C:\\Users\\Admin\\Pictures\\Saved Pictures\\paradise.jpg");
                 Image image2 = Image.FromFile("C:\\Users\\Admin\\Pictures\\Saved Pictures\\paradise2.jpg");
                 Image image3 = Image.FromFile("C:\\Users\\Admin\\Pictures\\Saved Pictures\\paradise3.jpg");
+
                 var ms = new MemoryStream();
-                var ms2 = new MemoryStream();
-                var ms3 = new MemoryStream();
-                image.Save(ms, System.Drawing.Imaging.ImageFormat.Jpeg);
-                image2.Save(ms2, System.Drawing.Imaging.ImageFormat.Jpeg);
-                image3.Save(ms3, System.Drawing.Imaging.ImageFormat.Jpeg);
+                image.Save(ms, image.RawFormat);
                 var bytes = ms.ToArray();
-                var bytes2 = ms2.ToArray();
-                var bytes3 = ms3.ToArray();
+                image2.Save(ms, image.RawFormat);
+                var bytes2 = ms.ToArray();
+                image3.Save(ms, image.RawFormat);
+                var bytes3 = ms.ToArray();
 
-                Photo photo1 = new Photo(bytes);
-                Photo photo2 = new Photo(bytes2);
-                Photo photo3 = new Photo(bytes3);
-                List<Photo> listPhotos = new List<Photo>();
-                listPhotos.Add(photo1);
-                listPhotos.Add(photo2);
-                listPhotos.Add(photo3);
-                _dbContext.Photos.Add(photo1);
-                _dbContext.Photos.Add(photo2);
-                _dbContext.Photos.Add(photo3);
-
+                Photo photo1 = new Photo(Convert.ToBase64String(bytes));
+                Photo photo2 = new Photo(Convert.ToBase64String(bytes2));
+                Photo photo3 = new Photo(Convert.ToBase64String(bytes3));
               
                 kajakkenGent.AddPhoto(photo1); //elk een foto
                 reisMadrid.AddPhoto(photo2);

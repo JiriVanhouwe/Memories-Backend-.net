@@ -64,6 +64,11 @@ namespace Memories
             {
                 //passwoord settings
                 options.Password.RequiredLength = 6;
+                options.Password.RequireDigit = true;
+                options.Password.RequireLowercase = true;
+                options.Password.RequireNonAlphanumeric = true;
+                options.Password.RequireUppercase = true;
+                options.Password.RequiredUniqueChars = 1;
 
                 //lockout
                 options.Lockout.MaxFailedAccessAttempts = 3;
@@ -72,6 +77,7 @@ namespace Memories
 
                 //user
                 options.User.RequireUniqueEmail = true;
+                options.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
             });
 
             //extra info toevoegen op swagger
@@ -87,10 +93,13 @@ namespace Memories
                     Type = OpenApiSecuritySchemeType.ApiKey,//use API keys for authorization. An API key is a token that a client provides when making API calls.In = OpenApiSecurityApiKeyLocation.Header, //token is passedin theheaderName = "Authorization", //name of header tobeusedDescription = "Type into the textbox: Bearer {your JWT token}."//description above textfieldto enter bearer token});c.OperationProcessors.Add(new AspNetCoreOperationSecurityScopeProcessor("JWT")); //adds the token when a request is send});90
 
                 });
-                // services.AddSwaggerDocument();
+                 services.AddSwaggerDocument();
 
-            }); 
-            }
+            });
+
+            services.AddCors(options => options.AddPolicy("AllowAllOrigins", builder => builder.AllowAnyOrigin()));
+
+        }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, MemoryDataInitializer memoryDataInitializer)
@@ -104,6 +113,7 @@ namespace Memories
 
             app.UseOpenApi();
             app.UseSwaggerUi3(); 
+
             app.UseRouting();
 
             app.UseAuthorization();

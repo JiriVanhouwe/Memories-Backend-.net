@@ -16,7 +16,7 @@ namespace Memories.Controllers
     [ApiConventionType(typeof(DefaultApiConventions))]
     [Produces("application/json")]
     [Route("api/memories")]
-    [Authorize(AuthenticationSchemes =JwtBearerDefaults.AuthenticationScheme)] //je moet aangemeld zijn om de endpoints te gebruiken
+    //[Authorize(AuthenticationSchemes =JwtBearerDefaults.AuthenticationScheme)] //je moet aangemeld zijn om de endpoints te gebruiken
     [ApiController]
     public class MemoriesController : ControllerBase
     {
@@ -81,6 +81,14 @@ namespace Memories.Controllers
         [HttpPut("{id}")]
         public IActionResult PutMemory(Memory memory)
         {
+            if(memory.Photos != null)
+            {
+                foreach(var photo in memory.Photos)
+                {
+                    memory.AddPhoto(photo);
+                }
+            }
+
             _memoryRepository.Update(memory);
             _memoryRepository.SaveChanges();
             return NoContent();
@@ -104,7 +112,7 @@ namespace Memories.Controllers
             return NoContent();
          }
         
-        
+        /*
         //POST api/memories/id/photos
         /// <summary>
         /// Saves a photo into a memory.
@@ -131,7 +139,7 @@ namespace Memories.Controllers
             _memoryRepository.SaveChanges();
             return NoContent();
 
-        }
+        }*/
         
     }
 }
