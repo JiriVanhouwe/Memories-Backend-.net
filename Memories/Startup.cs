@@ -19,6 +19,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using NSwag;
+using NSwag.Generation.Processors.Security;
 
 namespace Memories
 {
@@ -77,7 +78,7 @@ namespace Memories
 
                 //user
                 options.User.RequireUniqueEmail = true;
-                options.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+                options.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+";
             });
 
             //extra info toevoegen op swagger
@@ -90,10 +91,13 @@ namespace Memories
 
                 c.AddSecurity("JWT", new OpenApiSecurityScheme
                 {
-                    Type = OpenApiSecuritySchemeType.ApiKey,//use API keys for authorization. An API key is a token that a client provides when making API calls.In = OpenApiSecurityApiKeyLocation.Header, //token is passedin theheaderName = "Authorization", //name of header tobeusedDescription = "Type into the textbox: Bearer {your JWT token}."//description above textfieldto enter bearer token});c.OperationProcessors.Add(new AspNetCoreOperationSecurityScopeProcessor("JWT")); //adds the token when a request is send});90
-
+                    Type = OpenApiSecuritySchemeType.ApiKey, //use API keys for authorization. An API key is a token that a client provides when making API calls.
+                    In = OpenApiSecurityApiKeyLocation.Header, //token is passed in the header
+                    Name = "Authorization", //name of header to be used
+                    Description = "Type into the textbox: Bearer {your JWT token}. " //description above textfield to enter bearer token
                 });
-                 services.AddSwaggerDocument();
+                c.OperationProcessors.Add(
+                new AspNetCoreOperationSecurityScopeProcessor("JWT"));
 
             });
 
