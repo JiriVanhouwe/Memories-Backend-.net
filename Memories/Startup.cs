@@ -36,7 +36,7 @@ namespace Memories
         public void ConfigureServices(IServiceCollection services)
         {
 
-            services.AddAuthorization();
+          //  services.AddAuthorization();
             services.AddControllers();
             services.AddDbContext<ApplicationDbContext>(options =>
              options.UseSqlServer(Configuration.GetConnectionString("MemoryContext")));
@@ -46,14 +46,21 @@ namespace Memories
             services.AddScoped<IUserRepository, UserRepository>();
 
             //authenticatie
-            services.AddAuthentication(option => { option.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme; })
+            services.AddAuthentication(option => { 
+                option.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                option.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
                 .AddJwtBearer(options => {
-                    options.TokenValidationParameters = new TokenValidationParameters()
+                    options.RequireHttpsMetadata = false;
+                    options.SaveToken = true;
+                    options.TokenValidationParameters = new TokenValidationParameters
                     {
-                        ValidateAudience = false,
-                        ValidateIssuer = false,
                         ValidateIssuerSigningKey = true,
-                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Tokens:Key"]))
+                        IssuerSigningKey = new SymmetricSecurityKey(
+                       Encoding.UTF8.GetBytes(Configuration["Tokens:Key"])),
+                        ValidateIssuer = false,
+                        ValidateAudience = false,
+                        RequireExpirationTime = true //Ensure token hasn't expired
                     };
                 });
 
@@ -119,6 +126,8 @@ namespace Memories
             app.UseSwaggerUi3(); 
 
             app.UseRouting();
+
+            app.UseAuthentication();
 
             app.UseAuthorization();
 

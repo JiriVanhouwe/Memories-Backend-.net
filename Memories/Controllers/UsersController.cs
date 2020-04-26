@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using System.Net.Mail;
 using System.Threading.Tasks;
 using Memories.DTOs;
 using Memories.Models;
@@ -42,16 +44,86 @@ namespace Memories.Controllers
 
             if (user.FriendsWith != null)
             {
-                Console.WriteLine("NIET LEEG");
                 user.FriendsWith.ForEach(friend => friends.Add(_userRepository.GetById(friend.FriendWithId)));
-            } else Console.WriteLine("WEL LEEG");
-                
+            }              
 
             UserDTOWithFriends userWithFriends = new UserDTOWithFriends(user.FirstName, user.LastName, user.Email, friends);
 
             return userWithFriends;
         }
 
+        //POST api/friends/
+        /// <summary>
+        /// If email not known: invite and return true. If email known: return false.
+        /// </summary>
+        /// <param name="email">The email of someone.</param>
+        /// <returns>True if the email is send, false if the user already exists. </returns>
+        [HttpGet]
+        public ActionResult<string> InviteUser(string email)
+        {
+            User user = _userRepository.GetByEmail(email);
+
+            if (user != null)
+                return "Dit e-mailadres is reeds geregistreerd.";
+
+            if (SendEmail(email))
+                return "De uitnodiging werd verzonden.";
+                 else   
+            return "Controleer of je een bestaand e-mailadres opgaf.";
+        }
+
+        private bool SendEmail(string email)
+        {
+            if (IsValidEmail(email))
+            {
+                MailAddress to = new MailAddress(email);
+                MailAddress from = new MailAddress("hetitlab@gmail.com");
+
+                MailMessage message = new MailMessage(from, to);
+                message.Subject = "Beste";
+                message.Body = "We nodigen je graag uit om de Memories-applicatie te gebruiken! Groeten, Jiri";
+
+                var smtp = new SmtpClient
+                {
+                    Host = "smtp.gmail.com",
+                    Port = 587,
+                    EnableSsl = true,
+                    DeliveryMethod = SmtpDeliveryMethod.Network,
+                    UseDefaultCredentials = false,
+                    Credentials = new NetworkCredential("hetitlab@gmail.com", "admin2020")
+                };
+
+                try
+                {
+                    smtp.Send(message);
+                }
+                catch (SmtpException ex)
+                {
+                    Console.WriteLine(ex.ToString());
+                }
+                return true;
+            }
+            else
+            {
+                Console.WriteLine("Emailadres van een foutief formaat.");
+                return false;
+            }
+        }
+
+        private bool IsValidEmail(string email)
+        {
+            try
+            {
+                var addr = new System.Net.Mail.MailAddress(email);
+                return addr.Address == email;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        /*
         //POST api/friends
         /// <summary>
         /// Add a new user.
@@ -66,26 +138,7 @@ namespace Memories.Controllers
             _userRepository.SaveChanges();
 
             return CreatedAtAction(nameof(GetUserAndFriends), new { id = userToCreate.UserId }, userToCreate);
-        }
-
-
-        //DELETE api/friends/id
-        /// <summary>
-        /// Deletes a friend of a user.
-        /// </summary>
-        /// <param name="id">The id of the friend that will be deleted.</param>
-        [HttpDelete("{id}")]
-        public ActionResult<User> DeleteUser(string id)
-        {  //TODO vriend verwijderen: moet je eerst weten wie ingelogd is! 
-            User user = _userRepository.GetByEmail(id);
-            if (user == null)
-                return NotFound();
-
-            _userRepository.Delete(user);
-            _userRepository.SaveChanges();
-            return NoContent();
-        }
-
+        }*/
 
 
     }

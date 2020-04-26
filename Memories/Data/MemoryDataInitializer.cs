@@ -33,10 +33,7 @@ namespace Memories.Data
                 User angelique = new User("Angelique", "Daponte", "angelique.daponte@gmail.com");
                 User frank = new User("Frank", "Deboosere", "frank.deboosere@gmail.com");
                 User paul = new User("Paul", "Jambers", "paul.jambers@gmail.com");
-                await CreateUser(jiri.Email, "Memories1");
-                await CreateUser(angelique.Email, "Memories1");
-                await CreateUser(frank.Email, "Memories1");
-                await CreateUser(paul.Email, "Memories1");
+               
                 jiri.AddFriend(angelique);
                 jiri.AddFriend(frank);
                 jiri.AddFriend(paul);
@@ -45,6 +42,11 @@ namespace Memories.Data
                 _dbContext.Users.Add(angelique);
                 _dbContext.Users.Add(frank);
                 _dbContext.Users.Add(paul);
+
+                await CreateUser(jiri.Email, "Memories1");
+                await CreateUser(angelique.Email, "Memories1");
+                await CreateUser(frank.Email, "Memories1");
+                await CreateUser(paul.Email, "Memories1");
 
 
                 //memories
