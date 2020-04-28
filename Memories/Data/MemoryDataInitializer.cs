@@ -47,6 +47,7 @@ namespace Memories.Data
                 await CreateUser(angelique.Email, "Memories1");
                 await CreateUser(frank.Email, "Memories1");
                 await CreateUser(paul.Email, "Memories1");
+                _dbContext.SaveChanges();
 
 
                 //memories
@@ -98,7 +99,8 @@ namespace Memories.Data
         {
             var user = new IdentityUser { UserName = email, Email = email };
             await _userManager.CreateAsync(user, password);
-           
+           // await _userManager.SetUserNameAsync(user, user.Email);
+
         }
     }
 }

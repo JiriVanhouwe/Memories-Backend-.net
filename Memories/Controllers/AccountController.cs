@@ -40,7 +40,7 @@ namespace Memories.Controllers
             {
                 var result = await _signInManager.CheckPasswordSignInAsync(user, model.Password, false); //password checken
 
-                if(result.Succeeded) //als de gebruiker is aangemeld, dat kunnen we een token aanmaken
+                if(result.Succeeded) //als de gebruiker is aangemeld, dan kunnen we een token aanmaken
                 {
                     string token = GetToken(user);
                     return Created("", token);

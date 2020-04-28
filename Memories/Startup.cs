@@ -45,24 +45,7 @@ namespace Memories
             services.AddScoped<IMemoryRepository, MemoryRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
 
-            //authenticatie
-            services.AddAuthentication(option => { 
-                option.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                option.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            })
-                .AddJwtBearer(options => {
-                    options.RequireHttpsMetadata = false;
-                    options.SaveToken = true;
-                    options.TokenValidationParameters = new TokenValidationParameters
-                    {
-                        ValidateIssuerSigningKey = true,
-                        IssuerSigningKey = new SymmetricSecurityKey(
-                       Encoding.UTF8.GetBytes(Configuration["Tokens:Key"])),
-                        ValidateIssuer = false,
-                        ValidateAudience = false,
-                        RequireExpirationTime = true //Ensure token hasn't expired
-                    };
-                });
+        
 
 
             //alles rond identity
@@ -88,6 +71,25 @@ namespace Memories
                 options.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+";
             });
 
+            //authenticatie
+            services.AddAuthentication(option => {
+                option.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                option.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+                .AddJwtBearer(options => {
+                    options.RequireHttpsMetadata = false;
+                    options.SaveToken = true;
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuerSigningKey = true,
+                        IssuerSigningKey = new SymmetricSecurityKey(
+                       Encoding.UTF8.GetBytes(Configuration["Tokens:Key"])),
+                        ValidateIssuer = false,
+                        ValidateAudience = false,
+                        RequireExpirationTime = true //Ensure token hasn't expired
+                    };
+                });
+
             //extra info toevoegen op swagger
             services.AddOpenApiDocument(c =>
             {
@@ -96,7 +98,7 @@ namespace Memories
                 c.Version = "v1";
                 c.Description = "The Memory API documentation - Jiri Vanhouwe";
 
-                c.AddSecurity("JWT", new OpenApiSecurityScheme
+                c.AddSecurity("JWT", Enumerable.Empty<string>(), new OpenApiSecurityScheme
                 {
                     Type = OpenApiSecuritySchemeType.ApiKey, //use API keys for authorization. An API key is a token that a client provides when making API calls.
                     In = OpenApiSecurityApiKeyLocation.Header, //token is passed in the header

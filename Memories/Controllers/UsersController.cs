@@ -81,7 +81,7 @@ namespace Memories.Controllers
 
                 MailMessage message = new MailMessage(from, to);
                 message.Subject = "Beste";
-                message.Body = "We nodigen je graag uit om de Memories-applicatie te gebruiken! Groeten, Jiri";
+                message.Body = "We nodigen je graag uit om de Memories-applicatie te gebruiken! Groeten, Jiri"; //TODO aanpassen zodat de ingelogde persoon zijn naam erbij staat
 
                 var smtp = new SmtpClient
                 {
