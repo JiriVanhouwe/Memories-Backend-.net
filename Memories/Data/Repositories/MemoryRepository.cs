@@ -12,11 +12,13 @@ namespace Memories.Data.Repositories
 
         private readonly ApplicationDbContext _context;
         private readonly DbSet<Memory> _memories;
+        private readonly DbSet<User> _users;
 
         public MemoryRepository(ApplicationDbContext dbContext)
         {
             _context = dbContext;
             _memories = dbContext.Memories;
+            _users = dbContext.Users;
         }
 
         public void Add(Memory memory)
@@ -29,9 +31,11 @@ namespace Memories.Data.Repositories
             _memories.Remove(memory);
         }
 
-        public IEnumerable<Memory> GetAll()
+        public IEnumerable<Memory> GetAll(int id)
         {
-            return _memories.Include(m => m.Location).ToList();
+            User user = _users.Include(u => u.Memories).ThenInclude(um => um.Memory).ThenInclude(m => m.Location).SingleOrDefault(u => u.UserId == id);
+
+            return user.Memories.Select(u => u.Memory).ToList();
         }
 
         public Memory GetById(int id)

@@ -43,10 +43,10 @@ namespace Memories.Data
                 _dbContext.Users.Add(frank);
                 _dbContext.Users.Add(paul);
 
-                await CreateUser(jiri.Email, "Memories1");
-                await CreateUser(angelique.Email, "Memories1");
-                await CreateUser(frank.Email, "Memories1");
-                await CreateUser(paul.Email, "Memories1");
+                await CreateUser(jiri.Email, "Memories1@");
+                await CreateUser(angelique.Email, "Memories1@");
+                await CreateUser(frank.Email, "Memories1@");
+                await CreateUser(paul.Email, "Memories1@");
                 _dbContext.SaveChanges();
 
 

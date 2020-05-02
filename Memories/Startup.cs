@@ -41,6 +41,7 @@ namespace Memories
             services.AddDbContext<ApplicationDbContext>(options =>
              options.UseSqlServer(Configuration.GetConnectionString("MemoryContext")));
 
+            services.AddHttpContextAccessor();
             services.AddScoped<MemoryDataInitializer>();
             services.AddScoped<IMemoryRepository, MemoryRepository>();
             services.AddScoped<IUserRepository, UserRepository>();

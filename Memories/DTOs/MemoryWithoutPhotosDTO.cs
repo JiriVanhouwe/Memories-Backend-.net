@@ -10,6 +10,8 @@ namespace Memories.DTOs
     public class MemoryWithoutPhotosDTO
     {
         [Required]
+        public int  Id{ get; set; }
+        [Required]
         public string Title { get; set; }
 
         [Required]
@@ -29,8 +31,9 @@ namespace Memories.DTOs
 
         }
 
-        public MemoryWithoutPhotosDTO(string title, string subTitle, DateTime startDate, DateTime endDate, Location location)
+        public MemoryWithoutPhotosDTO(int id, string title, string subTitle, DateTime startDate, DateTime endDate, Location location)
         {
+            Id = id;
             Title = title;
             SubTitle = subTitle;
             StartDate = startDate;

@@ -42,7 +42,7 @@ namespace Memories.Models
         public void AddFriend(User user)
         {
             FriendsWith.Add(new UserRelation(this, user));
-           // FriendsOf.Add(new UserRelation(user, this));
+            FriendsOf.Add(new UserRelation(user, this));
         }
 
         public void RemoveFriend(User user)

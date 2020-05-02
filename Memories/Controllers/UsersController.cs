@@ -6,7 +6,10 @@ using System.Net.Mail;
 using System.Threading.Tasks;
 using Memories.DTOs;
 using Memories.Models;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Memories.Controllers
@@ -14,28 +17,39 @@ namespace Memories.Controllers
     [ApiConventionType(typeof(DefaultApiConventions))]
     [Produces("application/json")]
     [Route("api/friends")]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)] //je moet aangemeld zijn om de endpoints te gebruiken
     [ApiController]
     public class UsersController : ControllerBase
     {
         private readonly IUserRepository _userRepository;
-        private readonly IMemoryRepository _memoryRepository;
 
-        public UsersController(IUserRepository context, IMemoryRepository memoRepo)
+        private readonly UserManager<IdentityUser> _userManager;
+        private readonly IHttpContextAccessor _httpContextAccessor;
+        public User _loggedInUser;
+
+
+        public UsersController(IUserRepository context, IMemoryRepository memoRepo, UserManager<IdentityUser> userManager, IHttpContextAccessor httpContextAccessor)
         {
             _userRepository = context;
-            _memoryRepository = memoRepo;
+
+            _userManager = userManager;
+            _httpContextAccessor = httpContextAccessor;
+
+            var id = _userManager.GetUserId(_httpContextAccessor.HttpContext.User);
+            User user = _userRepository.GetByEmail(id);
+            _loggedInUser = user;
         }
 
-        //GET api/friends/id
+
+        //GET api/friends
         /// <summary>
-        /// Get a user and friends and memories with a given id.
+        /// Get a user and his friends.
         /// </summary>
-        /// <param name="id">The email of a user.</param>
-        /// <returns>The user + memories + friends. </returns>
-        [HttpGet("{id}")]
-        public ActionResult<UserDTOWithFriends> GetUserAndFriends(int id)
+        /// <returns>The user his friends. </returns>
+        [HttpGet]
+        public ActionResult<UserDTOWithFriends> GetUserAndFriends()
         {
-            User user = _userRepository.GetById(id);
+            User user = _loggedInUser;
 
             if (user == null)
                 return NotFound();
@@ -52,21 +66,21 @@ namespace Memories.Controllers
             return userWithFriends;
         }
 
-        //POST api/friends/
+        //POST api/friends/invite
         /// <summary>
         /// If email not known: invite and return true. If email known: return false.
         /// </summary>
-        /// <param name="email">The email of someone.</param>
+        /// <param name="invite">The email of someone.</param>
         /// <returns>True if the email is send, false if the user already exists. </returns>
-        [HttpGet]
-        public ActionResult<string> InviteUser(string email)
+        [HttpGet("{invite}")]
+        public ActionResult<string> InviteUser(string invite)
         {
-            User user = _userRepository.GetByEmail(email);
+            User user = _userRepository.GetByEmail(invite);
 
             if (user != null)
                 return "Dit e-mailadres is reeds geregistreerd.";
 
-            if (SendEmail(email))
+            if (SendEmail(invite))
                 return "De uitnodiging werd verzonden.";
                  else   
             return "Controleer of je een bestaand e-mailadres opgaf.";
@@ -77,11 +91,11 @@ namespace Memories.Controllers
             if (IsValidEmail(email))
             {
                 MailAddress to = new MailAddress(email);
-                MailAddress from = new MailAddress("hetitlab@gmail.com");
+                MailAddress from = new MailAddress("memories.invitation@gmail.com");
 
                 MailMessage message = new MailMessage(from, to);
-                message.Subject = "Beste";
-                message.Body = "We nodigen je graag uit om de Memories-applicatie te gebruiken! Groeten, Jiri"; //TODO aanpassen zodat de ingelogde persoon zijn naam erbij staat
+                message.Subject = "Uitnodiging Memories";
+                message.Body = String.Format("Beste, \n\n{0} nodigt je uit om fijne herinneringen te delen via de Memories applicatie. Neem gerust een kijkje op memories.be.\n\nTot binnenkort,\nHet Memories-team\n", _loggedInUser.FirstName + " " + _loggedInUser.LastName); //TODO aanpassen zodat de ingelogde persoon zijn naam erbij staat
 
                 var smtp = new SmtpClient
                 {
@@ -90,7 +104,7 @@ namespace Memories.Controllers
                     EnableSsl = true,
                     DeliveryMethod = SmtpDeliveryMethod.Network,
                     UseDefaultCredentials = false,
-                    Credentials = new NetworkCredential("hetitlab@gmail.com", "admin2020")
+                    Credentials = new NetworkCredential("memories.invitation@gmail.com", "M3m0r13s1@")
                 };
 
                 try
@@ -122,23 +136,6 @@ namespace Memories.Controllers
                 return false;
             }
         }
-
-        /*
-        //POST api/friends
-        /// <summary>
-        /// Add a new user.
-        /// </summary>
-        /// <param name="user">The new user.</param>
-        /// <returns></returns>
-        [HttpPost]
-        public ActionResult<User> CreateUser(UserDTO user)
-        {
-            User userToCreate = new User() {FirstName = user.FirstName, LastName = user.LastName, Email = user.Email };
-            _userRepository.Add(userToCreate);
-            _userRepository.SaveChanges();
-
-            return CreatedAtAction(nameof(GetUserAndFriends), new { id = userToCreate.UserId }, userToCreate);
-        }*/
 
 
     }

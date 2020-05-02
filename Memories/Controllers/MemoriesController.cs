@@ -9,6 +9,7 @@ using Memories.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Memories.Controllers
@@ -23,10 +24,21 @@ namespace Memories.Controllers
         private readonly IMemoryRepository _memoryRepository;
         private readonly IUserRepository _userRepository;
 
-        public MemoriesController(IMemoryRepository context, IUserRepository userRepo)
+        private readonly UserManager<IdentityUser> _userManager;
+        private readonly IHttpContextAccessor _httpContextAccessor;
+        public User _loggedInUser;
+
+        public MemoriesController(IMemoryRepository context, IUserRepository userRepo, UserManager<IdentityUser> userManager, IHttpContextAccessor httpContextAccessor)
         {
             _memoryRepository = context;
             _userRepository = userRepo;
+
+            _userManager = userManager;
+            _httpContextAccessor = httpContextAccessor;
+
+            var id = _userManager.GetUserId(_httpContextAccessor.HttpContext.User);
+            User user = _userRepository.GetByEmail(id); 
+            _loggedInUser = user;
         }
 
         //GET api/memories
@@ -35,9 +47,18 @@ namespace Memories.Controllers
         /// </summary>
         /// <returns>All the memories.</returns>
         [HttpGet]  
-        public IEnumerable<Memory> GetMemories() 
+        public IEnumerable<MemoryWithoutPhotosDTO> GetMemories() 
         {
-            return _memoryRepository.GetAll().OrderBy(m => m.StartDate).ToList();
+            List<MemoryWithoutPhotosDTO> result = new List<MemoryWithoutPhotosDTO>();
+
+            User user = _userRepository.UserAndMemories(_loggedInUser.UserId);
+
+            if(user.Memories != null)
+            { 
+                user.Memories.ForEach(mem => result.Add(new MemoryWithoutPhotosDTO(mem.Memory.MemoryId, mem.Memory.Title, mem.Memory.SubTitle, mem.Memory.StartDate, mem.Memory.EndDate, mem.Memory.Location)));
+            }
+
+            return result.OrderBy(m => m.StartDate).ToList();
         }
 
         //GET api/memory/id
@@ -66,8 +87,9 @@ namespace Memories.Controllers
         public ActionResult<Memory> CreateMemory(MemoryWithoutPhotosDTO memory)
         {
             Memory memoryToCreate = new Memory() {Title = memory.Title, SubTitle = memory.SubTitle, StartDate = memory.StartDate, EndDate = memory.EndDate, Location = memory.Location };
-            _memoryRepository.Add(memoryToCreate);
-            _memoryRepository.SaveChanges();
+            memoryToCreate.AddMember(_loggedInUser);
+            _memoryRepository.Add(memoryToCreate); 
+            _memoryRepository.SaveChanges(); 
 
             return CreatedAtAction(nameof(GetMemory), new { id = memoryToCreate.MemoryId }, memoryToCreate);
         }
@@ -110,7 +132,8 @@ namespace Memories.Controllers
             _memoryRepository.SaveChanges();
             return NoContent();
          }
-        
+
+
         /*
         //POST api/memories/id/photos
         /// <summary>
@@ -139,6 +162,6 @@ namespace Memories.Controllers
             return NoContent();
 
         }*/
-        
+
     }
 }
