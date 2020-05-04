@@ -63,10 +63,14 @@ namespace Memories.Data
                 var ms = new MemoryStream();
                 image.Save(ms, image.RawFormat);
                 var bytes = ms.ToArray();
-                image2.Save(ms, image.RawFormat);
-                var bytes2 = ms.ToArray();
-                image3.Save(ms, image.RawFormat);
-                var bytes3 = ms.ToArray();
+
+                var ms2 = new MemoryStream();
+                image2.Save(ms2, image2.RawFormat);
+                var bytes2 = ms2.ToArray();
+
+                var ms3 = new MemoryStream();
+                image3.Save(ms3, image3.RawFormat);
+                var bytes3 = ms3.ToArray();
 
                 Photo photo1 = new Photo(Convert.ToBase64String(bytes));
                 Photo photo2 = new Photo(Convert.ToBase64String(bytes2));

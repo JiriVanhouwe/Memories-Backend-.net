@@ -66,14 +66,14 @@ namespace Memories.Controllers
             return userWithFriends;
         }
 
-        //POST api/friends/invite
+        //POST api/friends
         /// <summary>
         /// If email not known: invite and return true. If email known: return false.
         /// </summary>
         /// <param name="invite">The email of someone.</param>
         /// <returns>True if the email is send, false if the user already exists. </returns>
         [HttpGet("{invite}")]
-        public ActionResult<string> InviteUser(string invite)
+        public ActionResult<string> InviteFriend(string invite)
         {
             User user = _userRepository.GetByEmail(invite);
 
@@ -85,6 +85,48 @@ namespace Memories.Controllers
                  else   
             return "Controleer of je een bestaand e-mailadres opgaf.";
         }
+
+        //DELETE api/friends
+        /// <summary>
+        /// Delete a friend of the user's friendslist.
+        /// </summary>
+        /// <param name="email">This user will be deleted of the friendslist.</param>
+        /// <returns>If it worked.</returns>
+        [HttpDelete]
+        public ActionResult<string> DeleteFriend(string email)
+        {
+            User user = _userRepository.GetByEmail(email);
+
+            if (user == null)
+                return "Er ging iets mis";
+
+            _loggedInUser.RemoveFriend(user);
+            _userRepository.SaveChanges();
+            return email + " werd uit je vriendelijst verwijderd.";
+        }
+
+        //PUT api/friends
+        /// <summary>
+        /// Add a friend.
+        /// </summary>
+        /// <param name="email">Email of the friend to add.</param>
+        /// <returns></returns>
+        [HttpPut]
+        public ActionResult<string> AddFriend(string email)
+        {
+            User user = _userRepository.GetByEmail(email);
+
+            if (user == null)
+                return email + " kennen we nog niet. Nodig hem of haar gerust uit!";
+
+            if (_loggedInUser.AreFriends(user))
+                return "Jullie zijn al vrienden.";
+
+            _loggedInUser.AddFriend(user);
+            _userRepository.SaveChanges();
+            return email + " werd toegevoegd aan jouw vriendenlijst.";
+        }
+
 
         private bool SendEmail(string email)
         {

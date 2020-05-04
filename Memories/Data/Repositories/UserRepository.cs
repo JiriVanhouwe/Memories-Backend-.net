@@ -30,7 +30,7 @@ namespace Memories.Data.Repositories
 
         public User GetByEmail(string email)
         {
-            return _users.Include(u => u.FriendsWith).ThenInclude(u => u.FriendWith).Include(u => u.FriendsOf).ThenInclude(u => u.FriendOf).SingleOrDefault(u => u.Email == email);
+            return _users.Include(u => u.Memories).ThenInclude(u => u.Memory).Include(u => u.FriendsWith).ThenInclude(u => u.FriendWith).Include(u => u.FriendsOf).ThenInclude(u => u.FriendOf).SingleOrDefault(u => u.Email == email);
         }
 
 
@@ -52,7 +52,7 @@ namespace Memories.Data.Repositories
 
         public User UserAndMemories(int id)
         {
-            return _users.Include(u => u.Memories).ThenInclude(um => um.Memory).ThenInclude(m => m.Location).SingleOrDefault(u => u.UserId == id);
+            return _users.Include(u => u.Memories).ThenInclude(um => um.Memory).ThenInclude(m => m.Location).Include(u => u.Memories).ThenInclude(um => um.Memory).ThenInclude(m => m.Photos).SingleOrDefault(u => u.UserId == id);
 
         }
     }

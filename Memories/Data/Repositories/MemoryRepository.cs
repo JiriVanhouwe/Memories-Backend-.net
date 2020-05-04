@@ -40,8 +40,8 @@ namespace Memories.Data.Repositories
 
         public Memory GetById(int id)
         {
-            return _memories.Include(m => m.Location).Include(m => m.Photos).SingleOrDefault(m => m.MemoryId == id);
-        }
+            return _memories.Include(m => m.Location).Include(m => m.Photos).Include(m => m.Members).ThenInclude(m => m.User).SingleOrDefault(m => m.MemoryId == id);
+        } //.Include(m => m.Members).ThenInclude(m => m.Memory) => lukt niet: cycle    .Include(m => m.Members).ThenInclude(m => m.User)
 
         public void SaveChanges()
         {

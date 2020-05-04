@@ -45,6 +45,11 @@ namespace Memories.Models
             FriendsOf.Add(new UserRelation(user, this));
         }
 
+        public bool AreFriends(User user)
+        {
+            return FriendsOf.Select(f => f.FriendOf).Any(f => f.UserId == user.UserId) || FriendsOf.Select(f => f.FriendWith).Any(f => f.UserId == user.UserId);
+        }
+
         public void RemoveFriend(User user)
         {
             UserRelation ur = FriendsWith.FirstOrDefault(u => u.FriendWith == user);
@@ -57,7 +62,8 @@ namespace Memories.Models
 
         public void AddMemory(Memory memory)
         {
-            Memories.Add(new UserMemory(this, memory));
+            UserMemory um = new UserMemory(this, memory);
+            Memories.Add(um);
         }
 
         public void RemoveMemory(Memory memory)

@@ -18,11 +18,11 @@ namespace Memories.Models
         public DateTime StartDate { get; set; }
         [Required]
         public DateTime EndDate { get; set; }
-        public ICollection<Photo> Photos { get; private set; }
+        public List<Photo> Photos { get; private set; }
 
         [Required]
         public  Location Location { get; set; }
-        public ICollection<UserMemory> Members { get; private set; }
+        public List<UserMemory> Members { get; private set; }
         #endregion
 
         #region CONSTRUCTOR
@@ -60,7 +60,8 @@ namespace Memories.Models
 
         public void AddMember(User user)
         {
-            Members.Add(new UserMemory(user, this));
+            UserMemory um = new UserMemory(user, this);
+            Members.Add(um);
         }
 
         public void RemoveMember(User user)
