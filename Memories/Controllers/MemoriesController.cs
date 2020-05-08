@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace Memories.Controllers
 {
@@ -41,25 +42,6 @@ namespace Memories.Controllers
             _loggedInUser = user;
         }
 
-       /* //GET api/memories
-        /// <summary>
-        /// Get a user's memories.
-        /// </summary>
-        /// <returns>All the memories.</returns>
-        [HttpGet]  
-        public IEnumerable<MemoryWithoutPhotosDTO> GetMemories() 
-        {
-            List<MemoryWithoutPhotosDTO> result = new List<MemoryWithoutPhotosDTO>();
-
-            User user = _userRepository.UserAndMemories(_loggedInUser.UserId);
-
-            if(user.Memories != null)
-            { 
-                user.Memories.ForEach(mem => result.Add(new MemoryWithoutPhotosDTO(mem.Memory.MemoryId, mem.Memory.Title, mem.Memory.SubTitle, mem.Memory.StartDate, mem.Memory.EndDate, mem.Memory.Location)));
-            }
-
-            return result.OrderBy(m => m.StartDate).ToList();
-        }*/
 
         //GET api/memories
         /// <summary>
@@ -83,7 +65,7 @@ namespace Memories.Controllers
                     result.Add(new MemoryWithOnePhotoDTO(mem.Memory.MemoryId, mem.Memory.Title, mem.Memory.SubTitle, mem.Memory.StartDate, mem.Memory.EndDate, mem.Memory.Location, photo));
                 });
             }
-
+ 
             return result.OrderBy(m => m.StartDate).ToList();
         }
 
@@ -120,14 +102,22 @@ namespace Memories.Controllers
         public ActionResult<Memory> CreateMemory(MemoryWithoutPhotosDTO memory)
         {
             Memory memoryToCreate = new Memory() {Title = memory.Title, SubTitle = memory.SubTitle, StartDate = memory.StartDate, EndDate = memory.EndDate, Location = memory.Location };
-            memoryToCreate.AddMember(_loggedInUser);
-            _memoryRepository.Add(memoryToCreate); 
+            
+            
+            _loggedInUser.AddMemory(memoryToCreate);
+           //  memoryToCreate.AddMember(_loggedInUser); 
             _memoryRepository.SaveChanges();
 
             return CreatedAtAction(nameof(GetMemory), new { id = memoryToCreate.MemoryId }, memoryToCreate);
         }
 
         //POST api/memories/id
+        /// <summary>
+        /// Add a photo to a memory.
+        /// </summary>
+        /// <param name="Image">The photo.</param>
+        /// <param name="id">Id of the memory.</param>
+        /// <returns></returns>
         [HttpPost("{id}")]
         public async Task<IActionResult> AddPhoto(IFormFile Image,int id)
         {
@@ -152,21 +142,26 @@ namespace Memories.Controllers
 
         //PUT api/memories/id
         /// <summary>
-        /// Modifies a memory with the given id.
+        /// Change a memory.
         /// </summary>
-        /// <param name="memory">The modified memory.</param>
+        /// <param name="memory">The modified memory</param>
+        /// <param name="id">Id of the modified memory</param>
+        /// <returns></returns>
         [HttpPut("{id}")]
-        public IActionResult PutMemory(Memory memory)
+        public IActionResult PutMemory(Memory memory, int id)
         {
-            if(memory.Photos != null)
-            {
-                foreach(var photo in memory.Photos)
-                {
-                    memory.AddPhoto(photo);
-                }
-            }
+            Memory m = _memoryRepository.GetById(id); //TODO: locatie wijzigen lukt niet
 
-            _memoryRepository.Update(memory);
+            if (m == null)
+                return BadRequest();
+
+            m.Title = memory.Title;
+            m.SubTitle = memory.SubTitle;
+            if(memory.Location.City != m.Location.City || memory.Location.Country != m.Location.Country)
+                m.Location = memory.Location;
+            m.StartDate = memory.StartDate;
+            m.EndDate = memory.EndDate;
+
             _memoryRepository.SaveChanges();
             return NoContent();
         }
@@ -189,35 +184,6 @@ namespace Memories.Controllers
             return NoContent();
          }
 
-
-        /*
-        //POST api/memories/id/photos
-        /// <summary>
-        /// Saves a photo into a memory.
-        /// </summary>
-        /// <param name="memoryId">The memory id.</param>
-        /// <param name="Image">The photo.</param>
-        [HttpPost("{id}/photos")]
-        public async Task<IActionResult> CreatePhoto(int memoryId, List<IFormFile> Image)
-        {
-            Memory memory = _memoryRepository.GetById(memoryId);
-
-            foreach(var item in Image)
-            {
-                if(item.Length > 0)
-                {
-                    using(var stream = new MemoryStream())
-                    {
-                        await item.CopyToAsync(stream);
-                        memory.AddPhoto(new Photo(stream.ToArray()));
-                    }
-                }
-            }
-            _memoryRepository.Update(memory);
-            _memoryRepository.SaveChanges();
-            return NoContent();
-
-        }*/
 
     }
 }

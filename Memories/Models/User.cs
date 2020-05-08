@@ -25,16 +25,17 @@ namespace Memories.Models
         #region CONSTRUCTOR
         public User()
         {
-
+            FriendsWith = new List<UserRelation>();
+            FriendsOf = new List<UserRelation>();
+            Memories = new List<UserMemory>();
         }
-        public User(string firstName, string lastName, string email)
+        public User(string firstName, string lastName, string email) : this()
         {            
             FirstName = firstName;
             LastName = lastName;
             Email = email;
-            FriendsWith = new List<UserRelation>();
-            FriendsOf = new List<UserRelation>();
-            Memories = new List<UserMemory>();
+            
+
         }
         #endregion
 

@@ -56,7 +56,7 @@ namespace Memories.Data
                 Memory dinerInAmigo = new Memory("Verjaardagsdiner Amigo", "Smullen te Amigo",  new DateTime(2019, 7, 22), new DateTime(2019, 7, 22), gent);
 
                 //photos
-                Image image = Image.FromFile("C:\\Users\\Admin\\Pictures\\Saved Pictures\\paradise.jpg");
+                Image image = Image.FromFile("C:\\Users\\Admin\\Pictures\\Saved Pictures\\NoImage.jpg");
                 Image image2 = Image.FromFile("C:\\Users\\Admin\\Pictures\\Saved Pictures\\paradise2.jpg");
                 Image image3 = Image.FromFile("C:\\Users\\Admin\\Pictures\\Saved Pictures\\paradise3.jpg");
 

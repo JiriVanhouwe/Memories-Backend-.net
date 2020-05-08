@@ -28,18 +28,18 @@ namespace Memories.Models
         #region CONSTRUCTOR
         public Memory()
         {
-           
+            Photos = new List<Photo>();
+            Members = new List<UserMemory>();
         }
 
-        public Memory(string title, string subTitle,DateTime startDate, DateTime endDate, Location location)
+        public Memory(string title, string subTitle,DateTime startDate, DateTime endDate, Location location) : this()
         {
             Title = title;
             SubTitle = subTitle;
             StartDate = startDate;
             EndDate = endDate;
             Location = location;
-            Photos = new List<Photo>();
-            Members = new List<UserMemory>();
+            
         }
         #endregion
 
