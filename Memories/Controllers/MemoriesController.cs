@@ -48,8 +48,29 @@ namespace Memories.Controllers
         /// Get a user's memories.
         /// </summary>
         /// <returns>All the memories.</returns>
+        /* [HttpGet]
+         public IEnumerable<MemoryWithOnePhotoDTO> GetMemories()
+         {
+             List<MemoryWithOnePhotoDTO> result = new List<MemoryWithOnePhotoDTO>();
+
+             User user = _userRepository.UserAndMemories(_loggedInUser.UserId);
+
+             if (user.Memories != null)
+             {
+                 user.Memories.ForEach(mem => {
+                     Photo photo = null;
+                     if (mem.Memory.Photos != null)
+                         photo = mem.Memory.Photos.First();
+
+                     result.Add(new MemoryWithOnePhotoDTO(mem.Memory.MemoryId, mem.Memory.Title, mem.Memory.SubTitle, mem.Memory.StartDate, mem.Memory.EndDate, mem.Memory.Location, photo));
+                 });
+             }
+
+             return result.OrderBy(m => m.StartDate).ToList();
+         }*/
+
         [HttpGet]
-        public IEnumerable<MemoryWithOnePhotoDTO> GetMemories()
+        public IEnumerable<MemoryWithOnePhotoDTO> GetMemories(string filter = null)
         {
             List<MemoryWithOnePhotoDTO> result = new List<MemoryWithOnePhotoDTO>();
 
@@ -57,17 +78,30 @@ namespace Memories.Controllers
 
             if (user.Memories != null)
             {
-                user.Memories.ForEach(mem => {
+                user.Memories.ForEach(mem =>
+                {
                     Photo photo = null;
                     if (mem.Memory.Photos != null)
                         photo = mem.Memory.Photos.First();
 
                     result.Add(new MemoryWithOnePhotoDTO(mem.Memory.MemoryId, mem.Memory.Title, mem.Memory.SubTitle, mem.Memory.StartDate, mem.Memory.EndDate, mem.Memory.Location, photo));
                 });
+                if (filter != null)
+                {
+                    return GetByFilter(result, filter);
+                }
+                else
+                    return result;
             }
- 
-            return result.OrderBy(m => m.StartDate).ToList();
+            return result;
         }
+
+
+        private List<MemoryWithOnePhotoDTO> GetByFilter(List<MemoryWithOnePhotoDTO> mem, string filter)
+        {
+            return mem.Where(m => m.Title.ToLower().Contains(filter.ToLower()) || m.SubTitle.ToLower().Contains(filter.ToLower()) || m.Location.City.ToLower().Contains(filter.ToLower()) || m.Location.Country.ToLower().Contains(filter.ToLower())).ToList();
+        }
+
 
         //GET api/memory/id
         /// <summary>
