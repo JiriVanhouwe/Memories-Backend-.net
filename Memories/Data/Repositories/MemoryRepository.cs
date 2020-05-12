@@ -26,11 +26,6 @@ namespace Memories.Data.Repositories
             _memories.Add(memory);
         }
 
-        public void Delete(Memory memory)
-        {
-            _memories.Remove(memory);
-        }
-
         public IEnumerable<Memory> GetAll(int id)
         {
             User user = _users.Include(u => u.Memories).ThenInclude(um => um.Memory).ThenInclude(m => m.Location).SingleOrDefault(u => u.UserId == id);

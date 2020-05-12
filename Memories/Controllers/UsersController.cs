@@ -68,10 +68,10 @@ namespace Memories.Controllers
 
         //POST api/friends
         /// <summary>
-        /// If email not known: invite and return true. If email known: return false.
+        /// Sends an invite to an unkown user. 
         /// </summary>
-        /// <param name="invite">The email of someone.</param>
-        /// <returns>True if the email is send, false if the user already exists. </returns>
+        /// <param name="invite">Someone's e-mail.</param>
+        /// <returns>Message if the e-mail is send or not.</returns>
         [HttpGet("{invite}")]
         public ActionResult<string> InviteFriend(string invite)
         {
@@ -128,6 +128,8 @@ namespace Memories.Controllers
         }
 
 
+
+        //Hulpmethode
         private bool SendEmail(string email)
         {
             if (IsValidEmail(email))

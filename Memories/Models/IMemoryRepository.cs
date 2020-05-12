@@ -10,7 +10,6 @@ namespace Memories.Models
         Memory GetById(int id);
         IEnumerable<Memory> GetAll(int id);
         void Add(Memory memory);
-        void Delete(Memory memory);
         void Update(Memory memory);
         void SaveChanges();
     }

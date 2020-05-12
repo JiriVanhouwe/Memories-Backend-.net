@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
@@ -43,32 +44,11 @@ namespace Memories.Controllers
         }
 
 
-        //GET api/memories
         /// <summary>
-        /// Get a user's memories.
+        /// Get memories based on the given filter.
         /// </summary>
-        /// <returns>All the memories.</returns>
-        /* [HttpGet]
-         public IEnumerable<MemoryWithOnePhotoDTO> GetMemories()
-         {
-             List<MemoryWithOnePhotoDTO> result = new List<MemoryWithOnePhotoDTO>();
-
-             User user = _userRepository.UserAndMemories(_loggedInUser.UserId);
-
-             if (user.Memories != null)
-             {
-                 user.Memories.ForEach(mem => {
-                     Photo photo = null;
-                     if (mem.Memory.Photos != null)
-                         photo = mem.Memory.Photos.First();
-
-                     result.Add(new MemoryWithOnePhotoDTO(mem.Memory.MemoryId, mem.Memory.Title, mem.Memory.SubTitle, mem.Memory.StartDate, mem.Memory.EndDate, mem.Memory.Location, photo));
-                 });
-             }
-
-             return result.OrderBy(m => m.StartDate).ToList();
-         }*/
-
+        /// <param name="filter">Filter the memories</param>
+        /// <returns>Filtered memories</returns>
         [HttpGet]
         public IEnumerable<MemoryWithOnePhotoDTO> GetMemories(string filter = null)
         {
@@ -81,8 +61,9 @@ namespace Memories.Controllers
                 user.Memories.ForEach(mem =>
                 {
                     Photo photo = null;
-                    if (mem.Memory.Photos != null)
+                    if (mem.Memory.Photos.Count != 0)
                         photo = mem.Memory.Photos.First();
+                    else photo = LoadNoImage();             //standaard foto toevoegen
 
                     result.Add(new MemoryWithOnePhotoDTO(mem.Memory.MemoryId, mem.Memory.Title, mem.Memory.SubTitle, mem.Memory.StartDate, mem.Memory.EndDate, mem.Memory.Location, photo));
                 });
@@ -94,12 +75,6 @@ namespace Memories.Controllers
                     return result;
             }
             return result;
-        }
-
-
-        private List<MemoryWithOnePhotoDTO> GetByFilter(List<MemoryWithOnePhotoDTO> mem, string filter)
-        {
-            return mem.Where(m => m.Title.ToLower().Contains(filter.ToLower()) || m.SubTitle.ToLower().Contains(filter.ToLower()) || m.Location.City.ToLower().Contains(filter.ToLower()) || m.Location.Country.ToLower().Contains(filter.ToLower())).ToList();
         }
 
 
@@ -125,6 +100,17 @@ namespace Memories.Controllers
             return result;
         }
 
+        [HttpGet("{id}/add")]
+        public IEnumerable<string> GetFriendsNotPartOfTheMemory(int id)
+        {
+            Memory memory = _memoryRepository.GetById(id);
+
+            List<string> friends = _loggedInUser.FriendsWith.Select(f => f.FriendWith.Email).ToList();
+            List<string> userMemory = memory.Members.Select(m => m.User.Email).ToList();
+
+           return friends.Except(userMemory).ToList();
+        }
+
 
         //POST api/memories
         /// <summary>
@@ -133,16 +119,14 @@ namespace Memories.Controllers
         /// <param name="memory">The new memory.</param>
         /// <returns></returns>
         [HttpPost]
-        public ActionResult<Memory> CreateMemory(MemoryWithoutPhotosDTO memory)
+        public ActionResult<MemoryWithoutPhotosDTO> CreateMemory(MemoryWithoutPhotosDTO memory)
         {
             Memory memoryToCreate = new Memory() {Title = memory.Title, SubTitle = memory.SubTitle, StartDate = memory.StartDate, EndDate = memory.EndDate, Location = memory.Location };
             
-            
             _loggedInUser.AddMemory(memoryToCreate);
-           //  memoryToCreate.AddMember(_loggedInUser); 
             _memoryRepository.SaveChanges();
 
-            return CreatedAtAction(nameof(GetMemory), new { id = memoryToCreate.MemoryId }, memoryToCreate);
+            return memory;   
         }
 
         //POST api/memories/id
@@ -174,17 +158,39 @@ namespace Memories.Controllers
             return Ok();
         }
 
-        //PUT api/memories/id
+
+        //PUT api/memories/id/add
+        [HttpPut("{id}/add")]
+        public IActionResult AddFriendToMemory(string email, int id)
+        {
+            Memory m = _memoryRepository.GetById(id);
+
+            if (m == null)
+                return BadRequest();
+
+            User userToAdd = _userRepository.GetByEmail(email);
+
+            if (userToAdd == null)
+                return BadRequest();
+
+            m.AddMember(userToAdd);
+            _memoryRepository.SaveChanges();
+
+            return NoContent();
+
+        }
+
+        //PUT api/memories/id/edit
         /// <summary>
         /// Change a memory.
         /// </summary>
         /// <param name="memory">The modified memory</param>
         /// <param name="id">Id of the modified memory</param>
         /// <returns></returns>
-        [HttpPut("{id}")]
+        [HttpPut("{id}/edit")]
         public IActionResult PutMemory(Memory memory, int id)
         {
-            Memory m = _memoryRepository.GetById(id); //TODO: locatie wijzigen lukt niet
+            Memory m = _memoryRepository.GetById(id); 
 
             if (m == null)
                 return BadRequest();
@@ -213,10 +219,27 @@ namespace Memories.Controllers
             if (memory == null)
                 return NotFound();
 
-            _memoryRepository.Delete(memory);
+            memory.RemoveMember(_loggedInUser);
             _memoryRepository.SaveChanges();
             return NoContent();
          }
+        
+        //hulpmethode
+        private List<MemoryWithOnePhotoDTO> GetByFilter(List<MemoryWithOnePhotoDTO> mem, string filter)
+        {
+            return mem.Where(m => m.Title.ToLower().Contains(filter.ToLower()) || m.SubTitle.ToLower().Contains(filter.ToLower()) || m.Location.City.ToLower().Contains(filter.ToLower()) || m.Location.Country.ToLower().Contains(filter.ToLower())).ToList();
+        }
+
+        private Photo LoadNoImage()
+        {
+            Image image = Image.FromFile("./Images/NoImage.jpg");
+
+            var ms = new MemoryStream();
+            image.Save(ms, image.RawFormat);
+            var bytes = ms.ToArray();
+
+            return new Photo(Convert.ToBase64String(bytes));
+        }
 
 
     }
