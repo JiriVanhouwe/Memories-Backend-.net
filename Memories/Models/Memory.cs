@@ -53,9 +53,10 @@ namespace Memories.Models
         {
             list.ForEach(p => Photos.Add(p));
         }
-        public void RemovePhoto(Photo photo)
+        public void RemovePhoto(int id)
         {
-            Photos.Remove(photo);
+            Photo p = Photos.SingleOrDefault(p => p.PhotoId == id);
+            Photos.Remove(p);
         }
 
         public void AddMember(User user)
