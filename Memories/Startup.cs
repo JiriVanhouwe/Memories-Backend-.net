@@ -139,7 +139,7 @@ namespace Memories
                 endpoints.MapControllers();
             });
 
-            memoryDataInitializer.InitializeData().Wait();
+           // memoryDataInitializer.InitializeData().Wait();
         }
     }
 }

@@ -72,7 +72,7 @@ namespace Memories.Controllers
                     return GetByFilter(result, filter);
                 }
                 else
-                    return result;
+                    return result.OrderByDescending(m => m.StartDate);
             }
             return result;
         }
@@ -100,6 +100,11 @@ namespace Memories.Controllers
             return result;
         }
 
+        /// <summary>
+        /// Get the friends who are not part of the memory.
+        /// </summary>
+        /// <param name="id">id of the memory</param>
+        /// <returns>List of friends who are not part of the memory yet.</returns>
         [HttpGet("{id}/add")]
         public IEnumerable<string> GetFriendsNotPartOfTheMemory(int id)
         {
@@ -146,19 +151,21 @@ namespace Memories.Controllers
                     using (var stream = new MemoryStream())
                     {
                         await Image.CopyToAsync(stream);
-                        memory.AddPhoto(new Photo(Convert.ToBase64String(stream.ToArray())));
-                    
+                        memory.AddPhoto(new Photo(Convert.ToBase64String(stream.ToArray())));         
                 }
-                
             }
-
             _memoryRepository.Update(memory);
             _memoryRepository.SaveChanges();
 
             return Ok();
         }
 
-
+        /// <summary>
+        /// Adds a friend to a memory.
+        /// </summary>
+        /// <param name="email">email of the friend</param>
+        /// <param name="id">id of the memory</param>
+        /// <returns></returns>
         //PUT api/memories/id/add
         [HttpPut("{id}/add")]
         public IActionResult AddFriendToMemory(string email, int id)
@@ -227,7 +234,7 @@ namespace Memories.Controllers
         //hulpmethode
         private List<MemoryWithOnePhotoDTO> GetByFilter(List<MemoryWithOnePhotoDTO> mem, string filter)
         {
-            return mem.Where(m => m.Title.ToLower().Contains(filter.ToLower()) || m.SubTitle.ToLower().Contains(filter.ToLower()) || m.Location.City.ToLower().Contains(filter.ToLower()) || m.Location.Country.ToLower().Contains(filter.ToLower())).ToList();
+            return mem.Where(m => m.Title.ToLower().Contains(filter.ToLower()) || m.SubTitle.ToLower().Contains(filter.ToLower()) || m.Location.City.ToLower().Contains(filter.ToLower()) || m.Location.Country.ToLower().Contains(filter.ToLower())).OrderByDescending(m => m.StartDate).ToList();
         }
 
         private Photo LoadNoImage()

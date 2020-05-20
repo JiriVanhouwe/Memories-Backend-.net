@@ -109,7 +109,7 @@ namespace Memories.Controllers
         /// <summary>
         /// Add a friend.
         /// </summary>
-        /// <param name="email">Email of the friend to add.</param>
+        /// <param name="email">Email of the friend to add</param>
         /// <returns></returns>
         [HttpPut]
         public ActionResult<string> AddFriend(string email)
